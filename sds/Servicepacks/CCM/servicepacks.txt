@@ -1,0 +1,4 @@
+CCM4.2-SP3.zip,157
+CCM4.2-SP4.zip,187
+CCM5.0-SP4.zip,332
+CCM5.0-SP5.zip,421

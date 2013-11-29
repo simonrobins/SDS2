@@ -1,0 +1,10 @@
+@(productlist: List[String])
+
+<p><a href="@routes.Validate.index">Home</a></p>
+
+<dl>
+  <dt><h2>Missing from Releases</h2></dt>
+  @for(file <- productlist) {
+  	<dd>@file</dd>
+  }
+</dl>

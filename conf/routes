@@ -1,0 +1,70 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /				controllers.Application.index
+GET     /logout			controllers.Application.logout
+GET     /expired		controllers.Application.expired
+GET     /unauthorised	controllers.Application.unauthorised
+
+GET     /releases                                   controllers.Releases.index
+GET     /releases/:level1/:level2/:level3           controllers.Releases.download(level1, level2, level3)
+GET     /releases/internal/:level1/:level2/:level3  controllers.Releases.internal(level1, level2, level3)
+GET     /releases/redirect/:level1/:level2/:level3/:ref  controllers.Releases.redirect(level1, level2, level3, ref)
+
+GET     /language                                             controllers.Language.index
+GET     /language/internal/:level1/:level2/:level3/:file      controllers.Language.internal(level1, level2, level3, file)
+GET     /language/redirect/:level1/:level2/:level3/:file/:ref controllers.Language.redirect(level1, level2, level3, file, ref)
+GET     /language/:level1/:level2/:level3/:lang/:file         controllers.Language.download(level1, level2, level3, lang, file)
+
+GET     /installer/:level1/:level2/:level3          controllers.Language.install(level1, level2, level3)
+GET     /installer/internal/:level1/:level2/:level3 controllers.Language.installer(level1, level2, level3)
+
+GET     /servicepack                                 controllers.Servicepack.index
+POST    /servicepack/download                        controllers.Servicepack.download
+GET     /servicepack/internal/:file                  controllers.Servicepack.internal(file)
+GET     /servicepack/stream/:file/:ref/:size         controllers.Servicepack.stream(file, ref, size)
+GET     /servicepack/streaming/:file/:ref            controllers.Servicepack.streaming(file, ref)
+GET     /servicepack/:version                        controllers.Servicepack.finance(version)
+GET     /servicepack/doc/:version/:file              controllers.Servicepack.doc(version, file)
+
+GET     /ccm                   controllers.Ccm.ccm
+GET     /ccm/:file             controllers.Ccm.download(file)
+GET     /ccm/internal/:file    controllers.Ccm.internal(file)
+GET     /ccm/stream/:file/:ref controllers.Ccm.stream(file, ref)
+
+GET	    /documents											controllers.Documents.index
+GET     /documents/:level1/:level2/:level3					controllers.Documents.download3(level1, level2, level3)
+GET     /documents/:level1/:level2/:level3/:level4			controllers.Documents.download4(level1, level2, level3, level4)
+
+# These are not actually accessible because the previous two actions will match first
+# but this is okay because we only need them to be there to generate an internal redirect URL. 
+GET     /documents/internal/:level1/:level2/:level3			controllers.Documents.internal3(level1, level2, level3)
+GET     /documents/internal/:level1/:level2/:level3/:level4	controllers.Documents.internal4(level1, level2, level3, level4)
+
+POST	/support/upload							controllers.SupportArea.upload
+GET     /support/:level1		         		controllers.SupportArea.download1(level1)
+GET     /support/:level1/:level2         		controllers.SupportArea.download2(level1, level2)
+GET     /support/internal/:id/:level1			controllers.SupportArea.internal1(id, level1)
+GET     /support/internal/:id/:level1/:level2	controllers.SupportArea.internal2(id, level1, level2)
+GET	    /support                   				controllers.SupportArea.index
+
+GET	    /validate                    controllers.Validate.index
+GET	    /validate/missing_products   controllers.Validate.missingProducts
+GET	    /validate/unmapped_products  controllers.Validate.unmappedProducts
+GET	    /validate/missing_languages  controllers.Validate.missingLanguages
+GET	    /validate/unmapped_languages controllers.Validate.unmappedLanguages
+GET	    /validate/releases           controllers.Validate.releases
+GET	    /validate/languages          controllers.Validate.languages
+GET	    /validate/servicepacks       controllers.Validate.servicepacks
+
+GET		/secure/:id/:expires/:md5			controllers.Secure.fullAccess(id, expires, md5)
+GET		/secure/:id/:expires/:access/:md5	controllers.Secure.restrictedAccess(id, expires, access, md5)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file          controllers.Assets.at(path="/nginx/html", file)
+
+GET		/complete    controllers.Complete.complete
+
+GET		/time    controllers.Time.index

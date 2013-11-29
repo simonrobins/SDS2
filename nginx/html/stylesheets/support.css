@@ -1,0 +1,37 @@
+#supportTree {
+	padding: 1em;
+}
+
+#supportTree .folder, #supportTree .folder0, #supportTree .folder1 {
+	height: 32px;
+	line-height: 32px;
+	padding-left: 36px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/folder/root.png);
+}
+#supportTree .folder0 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/0.png);
+}
+#supportTree .folder1 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/1.png);
+}
+
+#supportTree .document {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 36px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/document/root.png);
+}
+#supportTree .document0, #supportTree .document1 {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 64px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/document/0.png);
+}
+#supportTree .document1 {
+	background-image: url(/assets/images/document/1.png);
+}

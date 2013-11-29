@@ -1,0 +1,7 @@
+XLforIM_V5000286_DutchLanguage.zip,133,162.43
+XLforIM_V5000286_FrenchLanguage.zip,132,162.43
+XLforIM_V5000286_GermanLanguage.zip,131,162.43
+XLforIM_V5000286_PolishLanguage.zip,139,162.43
+XLforIM_V5000286_RomanianLanguage.zip,142,162.43
+XLforIM_V5000286_SpanishLanguage.zip,135,162.43
+XLforIM_V5000286_TurkishLanguage.zip,144,162.43

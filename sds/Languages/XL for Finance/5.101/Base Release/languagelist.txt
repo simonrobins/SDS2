@@ -1,0 +1,11 @@
+XLforFinance_5.101_Czech.zip,134,163.39,180
+XLforFinance_5.101_Dutch.zip,133,163.39,180
+XLforFinance_5.101_French.zip,132,163.39,180
+XLforFinance_5.101_German.zip,131,163.39,180
+XLforFinance_5.101_Italian.zip,137,163.39,180
+XLforFinance_5.101_Polish.zip,139,163.39,180
+XLforFinance_5.101_Portuguese.zip,140,163.39,180
+XLforFinance_5.101_Romanian.zip,142,163.39,180
+XLforFinance_5.101_Spanish.zip,135,163.39,180
+XLforFinance_5.101_Swedish.zip,143,163.39,180
+XLforFinance_5.101_Turkish.zip,144,163.39,180

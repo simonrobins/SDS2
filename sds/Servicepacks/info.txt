@@ -1,0 +1,2 @@
+Service packs are downloaded in container files which may contain a selection of products dependent on the choice you have made.
+Due to the number of combinations possible, the automatic naming convention for the file to be downloaded cannot clearly represent your choice. For clarity, it is recommended you rename the file to something recognisable by yourselves in the "Save As" pop-up prior to downloading.

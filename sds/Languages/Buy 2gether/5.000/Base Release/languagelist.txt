@@ -1,0 +1,3 @@
+CODABuy2gether_V5000230_DutchLanguage.zip,133,150.43
+CODABuy2gether_V5000230_FrenchLanguage.zip,132,150.43
+CODABuy2gether_V5000230_GermanLanguage.zip,131,150.43

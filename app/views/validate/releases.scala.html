@@ -1,0 +1,31 @@
+@(releases: data.ProductNode)
+
+  <p><a href="@routes.Validate.index">Home</a></p>
+
+  <h2>Releases Product and Version List</h2>
+  @for(level1 <- releases.getChildren()) {
+  <ul>
+  	<li>@level1.name</li>
+    @for(level2 <- level1.getChildren()) {
+    <ul>
+      <li>@level2.name</li>
+      @for(level3 <- level2.getChildren()) {
+      <ul>
+        <li>@level3.name</li>
+        <ul>
+        @for(productVersion <- level3.asInstanceOf[data.ProductNode].getProducts()) {
+        <ul>
+        	@if(productVersion.valid()) {
+            <li>@productVersion</li>
+            } else {
+            <li style="background-color: red;">@productVersion</li>
+            }
+	    </ul>
+        }
+        </ul>
+      </ul>
+      }
+    </ul>
+    }
+  </ul>
+  }

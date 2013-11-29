@@ -1,0 +1,147 @@
+#languageTree {
+	padding: 1em;
+}
+
+#languageTree .folder, #languageTree .folder0, #languageTree .folder1,
+#languageTree .folder00, #languageTree .folder01, #languageTree .folder10, #languageTree .folder11,
+#languageTree .folder000, #languageTree .folder001, #languageTree .folder010, #languageTree .folder011,
+#languageTree .folder100, #languageTree .folder101, #languageTree .folder110, #languageTree .folder111 {
+	height: 32px;
+	line-height: 32px;
+	padding-left: 36px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/folder/root.png);
+}
+#languageTree .folder0 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/0.png);
+}
+#languageTree .folder1 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/1.png);
+}
+#languageTree .folder01 {
+	padding-left: 98px;
+	background-image: url(/assets/images/folder/01.png);
+}
+#languageTree .folder00 {
+	padding-left: 98px;
+	background-image: url(/assets/images/folder/00.png);
+}
+#languageTree .folder10 {
+	padding-left: 98px;
+	background-image: url(/assets/images/folder/10.png);
+}
+#languageTree .folder11 {
+	padding-left: 98px;
+	background-image: url(/assets/images/folder/11.png);
+}
+#languageTree .folder000 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/000.png);
+}
+#languageTree .folder001 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/001.png);
+}
+#languageTree .folder010 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/010.png);
+}
+#languageTree .folder011 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/011.png);
+}
+#languageTree .folder110 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/110.png);
+}
+#languageTree .folder100 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/100.png);
+}
+#languageTree .folder101 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/101.png);
+}
+#languageTree .folder111 {
+	padding-left: 130px;
+	background-image: url(/assets/images/folder/111.png);
+}
+
+#languageTree .document00, #languageTree .document01, #languageTree .document10, #languageTree .document11,
+#languageTree .document0000, #languageTree .document0001, #languageTree .document0010, #languageTree .document0011,
+#languageTree .document0100, #languageTree .document0101, #languageTree .document0110, #languageTree .document0111,
+#languageTree .document1000, #languageTree .document1001, #languageTree .document1010, #languageTree .document1011,
+#languageTree .document1100, #languageTree .document1101, #languageTree .document1110, #languageTree .document1111 {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 96px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/document/00.png);
+}
+#languageTree .document01 {
+	background-image: url(/assets/images/document/01.png);
+}
+#languageTree .document10 {
+	background-image: url(/assets/images/document/10.png);
+}
+#languageTree .document11 {
+	background-image: url(/assets/images/document/11.png);
+}
+#languageTree .document0000 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0000.png);
+}
+#languageTree .document0001 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0001.png);
+}
+#languageTree .document0010 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0010.png);
+}
+#languageTree .document0011 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0011.png);
+}
+#languageTree .document0100 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0100.png);
+}
+#languageTree .document0101 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0101.png);
+}
+#languageTree .document0110 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0110.png);
+}
+#languageTree .document0111 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/0111.png);
+}
+#languageTree .document1011 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/1011.png);
+}
+#languageTree .document1000 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/1000.png);
+}
+#languageTree .document1001 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/1001.png);
+}
+#languageTree .document1010 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/1010.png);
+}
+#languageTree .document1101 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/1101.png);
+}
+#languageTree .document1111 {
+	padding-left: 160px;
+	background-image: url(/assets/images/document/1111.png);
+}

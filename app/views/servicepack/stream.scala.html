@@ -1,0 +1,17 @@
+@(refresh: String, archive: String, percentage: Long)
+
+@main(refresh)()("servicepacks") {
+
+<h2 style="text-align: center">Your download is being prepared.</h2>
+<h3 style="text-align: center">It can take a few minutes to create a service pack containing your specific requirements.</h3>
+<h3 style="text-align: center">Please be patient.</h3>
+<!--h4 style="text-align: center"><img src="@routes.Assets.at("images/ajax-loader.gif")"></h4-->
+<div id="progress">
+	@if(percentage < 5) {
+		<div style="width: 5%;">@percentage%</div>
+	} else { 
+		<div style="width: @percentage%;">@percentage%</div>
+	}
+</div>
+
+}

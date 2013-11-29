@@ -1,0 +1,30 @@
+@(languages: data.LanguageNode)
+
+  <p><a href="@routes.Validate.index">Home</a></p>
+
+  <h2>Languages Product and Version List</h2>
+  @for(level1 <- languages.getChildren()) {
+  <ul>
+  	<li>@level1.name</li>
+    @for(level2 <- level1.getChildren()) {
+    <ul>
+      <li>@level2.name</li>
+      @for(level3 <- level2.getChildren()) {
+      <ul>
+        <li>@level3.name</li>
+        @for(level4 <- level3.getChildren()) {
+        <ul>
+            <li>@(level4.getDisplayLanguage())</li>
+            <ul>
+            @for(product <- level4.getChildren()) {
+            	<li>@product</li>
+            }
+            </ul>
+        </ul>
+        }
+      </ul>
+      }
+    </ul>
+    }
+  </ul>
+  }

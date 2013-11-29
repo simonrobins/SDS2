@@ -1,0 +1,231 @@
+body {
+	font: 90% Verdana, sans-serif;
+	background: #fff;
+	width: 974px;
+	margin: auto;
+	background-color: #eee;
+}
+
+table {
+	font: 100% Verdana, sans-serif;
+	line-height: 2em;
+	text-align: left;
+}
+
+div#content {
+	background-color: white;
+	padding: 8px 16px;
+	border-right: solid #AAA 1px;
+	border-left: solid #AAA 1px;
+	border-bottom: solid #AAA 1px;
+}
+
+div#content h4#footer {
+	text-align: right;
+}
+div#content h4#footer a {
+	color: black;
+	text-decoration: none;
+}
+
+div#header {
+	height: 128px;
+	background-image: url(/assets/images/sds-small.jpg);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+div#header #logo {
+	height: 64px;
+	background-image: url(/assets/images/unit4_logo_embracing_change.gif);
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+div#header #logout {
+	height: 64px;
+	line-height: 64px;
+}
+
+#navigation {
+	background-image: url(/assets/images/banner.jpg);
+	height: 120px;
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+#navigation ul {
+	padding: 0;
+	margin: 0;
+	image: url(/assets/images/menu_bg_new.png);
+	height: 33px;
+	list-style: none;
+	height: 33px;
+	background-image: url(/assets/images/menu_bg_new.png);
+}
+
+#navigation ul>li {
+	float: left;
+	height: 100%;
+}
+
+#navigation ul>li>a {
+	float: left;
+	height: 100%;
+	color: white;
+	text-decoration: none;
+	line-height: 33px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 0 1em;
+}
+
+#navigation ul>li>a:hover {
+	color: blue;
+	background-image: url(/assets/images/menu_left_corner.png);
+	background-position: 5px 5px;
+	background-repeat: no-repeat;
+}
+
+body#home #homeNav,
+body#releases #releasesNav,
+body#servicepacks #servicepacksNav,
+body#languagepacks #languagepacksNav,
+body#support #supportNav,
+body#documents #documentsNav {
+	color: blue;
+	background-image: url(/assets/images/menu_left_corner.png);
+	background-position: 5px 5px;
+	background-repeat: no-repeat;
+}
+
+#crumbtrail {
+	font-weight: bold;
+	background-color: silver;
+	border: solid black 1px;
+	padding: 1em;
+}
+
+#heading {
+	font-size: 1em;
+	background-color: silver;
+	border: solid black 1px;
+	padding: 1em;
+}
+
+#streaming {
+	text-align: center;
+}
+
+#progress {
+	background: #555;
+	height: 20px;
+	border-radius: 25px;
+	padding: 6px;
+	margin: 32px 64px 32px 64px;
+}
+#progress div {
+	height: 20px;
+	border-radius: 4px;
+	font-weight: bold;
+	text-align: center;
+
+	background-color: #0ae;
+	background-size: 50px 50px;
+	background-image: -webkit-linear-gradient(
+		-45deg, 
+		rgba(255, 255, 255, .2) 25%, 
+		transparent 25%, 
+		transparent 50%, 
+		rgba(255, 255, 255, .2) 50%, 
+		rgba(255, 255, 255, .2) 75%, 
+		transparent 75%, 
+		transparent);}
+
+.info_outer_wrapper {
+	font-size: 9pt;
+	padding-bottom: 1em;
+}
+.info_wrapper, .info_wrapper0, .info_wrapper1, .info_wrapper2 {
+	font-size: 9pt;
+	padding-left: 32px;
+	padding-bottom: 0.5em;
+	background-image: url(/assets/images/Info1.png);
+	background-repeat: repeat-y;
+}
+.info_wrapper0 {
+	padding-left: 64px;
+	background-image: url(/assets/images/Info3.png);
+}
+.info_wrapper1 {
+	padding-left: 64px;
+	background-image: url(/assets/images/Info2.png);
+}
+.info_wrapper2 {
+	padding-left: 64px;
+	background-image: url(/assets/images/Info3.png);
+}
+
+.info_text {
+	border: solid red 2px;
+	padding: 1em;
+	background-color: pink;
+	font-weight: bold;
+	font-size: 120%;
+}
+
+#installer_text {
+	border: solid silver 2px;
+	padding: 1em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	background-color: pink;
+	font-weight: bold;
+	text-align: center;
+ 	font-size: 120%;
+}
+
+#ie-warning {
+	margin: 0.5em;
+	padding: 1em;
+	text-align: center;
+	color: red;
+	border: solid red 8px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+span.fileLength {
+	float: right;
+	padding-right: 2em;
+}
+
+.error {
+	font-weight: bold;
+	color: red;
+}
+
+pre {
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	margin: 0;
+}
+
+#servicepack .folder {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 36px;
+	background-image: url(/assets/images/folder/root.png);
+	background-repeat: no-repeat;
+}
+
+#servicepack .file {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 36px;
+	background-image: url(/assets/images/document/root.png);
+	background-repeat: no-repeat;
+}

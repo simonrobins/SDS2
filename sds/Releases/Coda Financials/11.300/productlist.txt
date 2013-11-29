@@ -1,0 +1,13 @@
+Financials-cse_11.300.304.iso,19.281,151
+Financials-be_11.300.304.iso,12.281,19
+Assets_11.300.304.iso,2.281
+Administration-Console_11.300.304.iso,11.281,20
+Intelligence_11.300.304.iso,36.281
+Purchasing_11.300.304.iso,127.281
+ImagePost_11.300.304.iso,21.281
+Invoice-Matching_11.300.304.iso,22.281
+Supplementary-Software_11.300.304.iso,1.281,99.43
+Billing_11.300.304.iso,123.281
+Retail_11.300.304.iso,27.281
+XMLi_11.300.304.iso,35.281
+Cognos-Reporting_11.300.304.iso,41.281

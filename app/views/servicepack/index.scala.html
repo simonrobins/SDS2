@@ -1,0 +1,26 @@
+@(fin112: Boolean, fin113: Boolean, fin120: Boolean, ccm: Boolean)
+@main()()("servicepacks") {
+
+<h1>@Messages("UNIT4 Service Pack Area")</h1>
+
+<h2 id="heading">
+Here you will find the latest Service Packs for all products that support this release mechanism.
+</h2>
+
+<div id="servicepack">
+	@if(fin112) {
+	<a href="@routes.Servicepack.finance("11.200")"><div class="folder">Coda V11.2</div></a>
+	}
+	@if(fin113) {
+	<a href="@routes.Servicepack.finance("11.300")"><div class="folder">Coda V11.3</div></a>
+	}
+	@if(fin120) {
+	<a href="@routes.Servicepack.finance("12.000")"><div class="folder">Coda V12 Destination: Control</div></a>
+	}
+	<br/>
+	@if(ccm) {
+	<a href="@routes.Ccm.ccm"><div class="folder">Coda Control Manager</div></a>
+	}
+</div>
+
+}

@@ -1,0 +1,5 @@
+Manager_V4200SP3_AmericanEnglishLanguage.zip,202,78.296,146
+Manager_V4200SP3_DutchLanguage.zip,133,78.296,146
+Manager_V4200SP3_FrenchLanguage.zip,132,78.296,146
+Manager_V4200SP3_GermanLanguage.zip,131,78.296,146
+Manager_V4200SP3_HungarianLanguage.zip,136,78.296,146

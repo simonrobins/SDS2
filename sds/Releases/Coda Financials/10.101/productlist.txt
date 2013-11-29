@@ -1,0 +1,23 @@
+Add-ons_10.101.161.iso, 1.4
+CODA-Financials-Unicode_10.101.161.iso, 12.4, 19
+CODA-Financials_10.101.161.iso, 12.4, 19
+CODA-ImagePost-Unicode_10.101.161.iso, 21.4
+CODA-ImagePost_10.101.161.iso, 21.4
+CODA-Intelligence-for-IBM-AS400_10.101.161.iso, 36.4
+CODA-Intelligence-for-OpenVMS_10.101.161.iso, 36.4
+CODA-Intelligence_10.101.161.iso, 36.4
+CODA-Procurement_10.101.161.iso, 25.4
+CODA-Retail_10.101.161.iso, 27.4
+CODA-SalesInvoicing_10.101.161.iso, 29.4
+CODA-Workflow_10.101.161.iso, 32.4
+CODA-XMLi-Unicode_10.101.161.iso, 35.4
+CODA-XMLi_10.101.161.iso, 35.4
+CODAe-Assets-Unicode_10.101.161.iso, 9.4
+#CODAe-Assets_10.101.161.iso
+#CODAe-Billing_10.101.161.iso
+#CODAe-Finance-Unicode_10.101.161.iso
+#CODAe-Finance_10.101.161.iso
+#CODAe-InvoiceMatching_10.101.161.iso
+#CODAe-Procurement_10.101.161.iso
+#CognosReportNet_10.101.161.iso
+#Pre-InstallationTasks_10.101.161.iso

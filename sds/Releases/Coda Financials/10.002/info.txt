@@ -1,0 +1,7 @@
+Some CODA V10.002 products were too large for a single CD and were sub-divided on a platform basis as follows:
+
+  -  "split 1" items contain software for installation on the Windows client
+  -  "split 2" items contain software for installation on HP-UX (PA-RISC), Sun Solaris, Tru64 UNIX
+  -  "split 3" items contain software for installation on IBM AIX, IBM OS/400
+
+Where a CODA product could fit on a single CD it was not split, and all platforms are available together.

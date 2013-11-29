@@ -1,0 +1,4 @@
+This directory contains the latest releases of the Language Pack Installer and documentation for products compatible with Coda Financials v11.3 and earlier
+
+1.6 - Language Pack Installer for Windows
+1.5 - Language Pack Installer for Unix and User Guide

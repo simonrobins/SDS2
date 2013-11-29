@@ -1,0 +1,47 @@
+@(refresh: String="")(ie: Double=0.0)(id: String="")(content: Html)
+
+<!DOCTYPE html>
+<html>
+<head>
+@if(refresh) {
+<meta http-equiv="refresh" content="@Html(refresh)">
+}
+<title>Software Distribution Server</title>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/documents.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/languages.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/releases.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/support.css")">
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.ico")">
+</head>
+<body id="@id">
+	<div id="content">
+		<div id="header">
+			<div id="logo"></div>
+			<div id="logout">
+			@if(Http.Context.current.get() != null){
+				@flash.get("success")
+				@if(helpers.SessionHelper.INSTANCE.getAccountUsername(session)) {
+					Log out:
+					<a href="@routes.Application.logout">
+					@helpers.SessionHelper.INSTANCE.getAccountUsername(session)&nbsp;(@helpers.SessionHelper.INSTANCE.getAccountName(session))
+					</a>
+				}
+			}
+			</div>
+		</div>
+		<div id="navigation">
+			<ul>
+				<li><a id="homeNav" href="@routes.Application.index">@Messages("Home")</a></li>
+				<li><a id="releasesNav" href="@routes.Releases.index">@Messages("Releases")</a></li>
+				<li><a id="servicepacksNav" href="@routes.Servicepack.index">@Messages("Service Packs")</a></li>
+				<li><a id="languagepacksNav" href="@routes.Language.index">@Messages("Language Packs")</a></li>
+				<li><a id="supportNav" href="@routes.SupportArea.index">@Messages("Support Area")</a></li>
+				<li><a id="documentsNav" href="@routes.Documents.index">@Messages("Documents")</a></li>
+			</ul>
+		</div>
+		<div id="body">@content</div>
+		<h4 id="footer">Copyright &copy; 1992-2013 UNIT4 NV. All rights reserved.</h4>
+	</div>
+</body>
+</html>

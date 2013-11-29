@@ -1,0 +1,6 @@
+<div style="border: solid red 4px; color: red; padding-left: 1em; margin: 1em 0;">
+	<h2>
+		Please be aware that the Software Distribution Server
+		will be unavailable on Saturday the 27th and Sunday the 28th of April 2013.
+	</h2>
+</div>

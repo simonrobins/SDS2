@@ -1,0 +1,11 @@
+XLforFinance_V5000244_CzechLanguage.zip,134,163.43,180
+XLforFinance_V5000244_DutchLanguage.zip,133,163.43,180
+XLforFinance_V5000244_FrenchLanguage.zip,132,163.43,180
+XLforFinance_V5000244_GermanLanguage.zip,131,163.43,180
+XLforFinance_V5000244_ItalianLanguage.zip,137,163.43,180
+XLforFinance_V5000244_PolishLanguage.zip,139,163.43,180
+XLforFinance_V5000244_PortugueseLanguage.zip,140,163.43,180
+XLforFinance_V5000244_RomanianLanguage.zip,142,163.43,180
+XLforFinance_V5000244_SpanishLanguage.zip,135,163.43,180
+XLforFinance_V5000244_SwedishLanguage.zip,143,163.43,180
+XLforFinance_V5000244_TurkishLanguage.zip,144,163.43,180

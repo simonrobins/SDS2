@@ -1,0 +1,20 @@
+Coda V12 Destination: Control is split onto two DVDs by platform:
+  -  DVD1 contains Coda software for Windows and IBM i.
+  -  DVD2 contains Coda software for AIX, HP-UX and Solaris, and the Unix/Linux web server.
+
+For each platform there are several download options:
+  -  The complete DVD.
+  -  The Accounting family of products.
+  -  The Spend Management family of products.
+  -  The Foundation family of products.
+
+You may reduce the amount you need to download by only downloading the relevant files.  The Supported Matrix describes products and families.
+
+This release is shipped as follows:
+
+  -  base release consisting of all software (both V12 and release independent products)
+  -  service packs which are updates to a limited subset of products
+
+To ensure completeness, a customer should always install the base release followed by the most recent service pack.
+
+If there are suffix numbers on files then the highest numbered suffix is always the most recent and should be used.

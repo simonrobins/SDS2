@@ -1,0 +1,57 @@
+@(documents: data.AbstractNode)(ie: Double)
+
+@main()(ie)("documents") {
+
+<h1>UNIT4 Documents Area</h1>
+
+<h2 id="heading">
+Here, you will find all product major Base Releases, and any Maintenance Releases.
+Notations should be self-explanatory, but if in any doubt please contact GSD.
+</h2>
+
+<script src="@routes.Assets.at("javascripts/tree.js")" type="text/javascript"></script>
+<script type="text/javascript">
+	window.onload = function(){hide('documentsTree')}
+</script>
+
+<div id="documentsTree">
+	@if(documents.getInfo()) { <pre id="info_text">@documents.getInfo()</pre> }
+	<div style="padding-bottom: 1em">
+		<button onclick="hide('documentsTree')">Collapse All</button>
+		<button onclick="show('documentsTree')">Expand All</button>
+	</div>
+	@for(level1 <- documents.getSortedChildren()) {
+		<div class="folder@level1.getClassString()" onclick="hideshow(this)">@level1.name</div>
+		<div class="child">
+		@if(level1.getInfo()) { <pre id="info_text">@level1.getInfo()</pre> }
+		@for(level2 <- level1.getSortedChildren()) {
+			<div class="folder@level2.getClassString()" onclick="hideshow(this)">@level2.name</div>
+			<div class="child">
+			@if(level2.getInfo()) { <pre id="info_text">@level2.getInfo()</pre> }
+			@for(level3 <- level2.getSortedChildren()) {
+				@if(level3.isDirectory) {
+				<div class="folder@level3.getClassString()" onclick="hideshow(this)">@level3.name</div>
+				<div class="child">
+					@for(level4 <- level3.getSortedChildren()) {
+						<div class="document@level4.getClassString()">
+							<a href="@routes.Documents.download4(level1.name, level2.name, level3.name, level4.name)">
+								<span>@level4.name</span>
+							</a>
+						</div>
+					}
+				</div>
+				} else {
+				<div class="document@level3.getClassString()">
+					<a href="@routes.Documents.download3(level1.name, level2.name, level3.name)">
+						<span>@level3.name</span>
+					</a>
+				</div>
+				}
+			}
+			</div>
+		}
+		</div>
+	}
+</div>
+
+}

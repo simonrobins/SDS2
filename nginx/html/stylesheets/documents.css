@@ -1,0 +1,89 @@
+#documentsTree {
+	padding: 1em;
+}
+
+#documentsTree .folder,
+#documentsTree .folder0, #documentsTree .folder1,
+#documentsTree .folder00, #documentsTree .folder01, #documentsTree .folder10, #documentsTree .folder11 {
+	height: 32px;
+	line-height: 32px;
+	padding-left: 36px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/folder/root.png);
+}
+#documentsTree .folder0 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/0.png);
+}
+#documentsTree .folder1 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/1.png);
+}
+#documentsTree .folder00 {
+	padding-left: 100px;
+	background-image: url(/assets/images/folder/00.png);
+}
+#documentsTree .folder01 {
+	padding-left: 100px;
+	background-image: url(/assets/images/folder/01.png);
+}
+#documentsTree .folder10 {
+	padding-left: 100px;
+	background-image: url(/assets/images/folder/10.png);
+}
+#documentsTree .folder11 {
+	padding-left: 100px;
+	background-image: url(/assets/images/folder/11.png);
+}
+
+#documentsTree .document00, #documentsTree .document01, #documentsTree .document10, #documentsTree .document11,
+#documentsTree .document000, #documentsTree .document001, #documentsTree .document010, #documentsTree .document011,
+#documentsTree .document100, #documentsTree .document101, #documentsTree .document110, #documentsTree .document111 {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 96px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/pdf/00.png);
+}
+#documentsTree .document01 {
+	background-image: url(/assets/images/pdf/01.png);
+}
+#documentsTree .document10 {
+	background-image: url(/assets/images/pdf/10.png);
+}
+#documentsTree .document11 {
+	background-image: url(/assets/images/pdf/11.png);
+}
+
+#documentsTree .document000 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/000.png);
+}
+#documentsTree .document001 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/001.png);
+}
+#documentsTree .document010 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/010.png);
+}
+#documentsTree .document011 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/011.png);
+}
+#documentsTree .document100 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/000.png);
+}
+#documentsTree .document101 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/001.png);
+}
+#documentsTree .document110 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/010.png);
+}
+#documentsTree .document111 {
+	padding-left: 132px;
+	background-image: url(/assets/images/pdf/011.png);
+}

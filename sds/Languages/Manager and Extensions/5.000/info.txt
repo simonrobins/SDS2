@@ -1,0 +1,1 @@
+For Manager language packs must exactly match the service pack level. Some service packs do not have matching language packs and these service packs are intentionally English only.

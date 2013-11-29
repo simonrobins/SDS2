@@ -1,0 +1,13 @@
+@(sps: Map[java.io.File, List[String]])
+
+  <p><a href="@routes.Validate.index">Home</a></p>
+
+  <h2>Missing Service Pack files</h2>
+  <dl>
+  @for(sp <- sps) {
+  	<dt>@sp._1</dt>
+  	@for(missing <- sp._2) {
+  	  <dd>@missing</dd>
+  	}
+  }
+  </dl>

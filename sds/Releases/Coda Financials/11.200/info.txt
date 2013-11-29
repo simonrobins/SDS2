@@ -1,0 +1,23 @@
+Coda V11.2 is split into multiple image files by product:
+
+  -  Financials-cse contains Financials appserver and client software.
+  -  Financials-be contains Financials appserver and webserver software.
+  -  Billing contains Billing and Billing Masters appserver and webserver software.
+  -  Supplementary Software contains Coda Financials Add-Ons and free software such as Pay & Statements, Audit Trail, Subcontractor and Nordic Payments.
+  -  Assets contains Assets appserver and webserver software.
+  -  Administration Console contains Administration Console appserver and webserver software, along with Customiser, Print Formatter, Workflow Designer and DataStore.
+  -  Intelligence contains Coda Intelligence appserver and webserver software and ETL.
+  -  Purchasing contains Purchasing appserver and webserver software.
+  -  ImagePost contains ImagePost appserver and webserver software.
+  -  Invoice Matching contains Invoice Matching appserver and webserver software.
+
+You may reduce the amount you need to download by only downloading the relevant files.
+
+This release is shipped as follows:
+
+  -  base release consisting of all software (both V11.2 and release independent products)
+  -  service packs which are updates to a limited subset of products
+
+To ensure completeness, a customer should always install the base release followed by the most recent service pack.
+
+If there are suffix numbers on files then the highest numbered suffix is always the most recent and should be used.

@@ -1,0 +1,1 @@
+CODA Financials Language Packs:  These are only provided at service pack level when necessary.  Therefore, not all service packs have a corresponding language pack.  Use the language pack with the corresponding service pack number; otherwise use the language pack with the highest preceding service pack number.

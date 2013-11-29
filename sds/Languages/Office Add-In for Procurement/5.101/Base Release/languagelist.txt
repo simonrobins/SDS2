@@ -1,0 +1,4 @@
+OfficeAdd-InforProcurement_5.101_Dutch.exe,133,150.39
+OfficeAdd-InforProcurement_5.101_French.exe,132,150.39
+OfficeAdd-InforProcurement_5.101_German.exe,131,150.39
+

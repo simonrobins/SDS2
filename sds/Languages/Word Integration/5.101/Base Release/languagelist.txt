@@ -1,0 +1,3 @@
+WordIntegration_5.101_Dutch.exe,133,99.39
+WordIntegration_5.101_French.exe,132,99.39
+WordIntegration_5.101_German.exe,131,99.39

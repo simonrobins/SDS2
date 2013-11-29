@@ -1,0 +1,82 @@
+@(products: data.AbstractNode)(ie: Double)
+
+@main()(ie)("releases") {
+
+<h1>UNIT4 Releases Area</h1>
+
+@if(ie >= 7.0 && ie < 8.0) {
+<div id="ie-warning">
+	<p>
+		The version of Internet Explorer you appear to be using (@ie) doesn't support downloads larger than 2Gb.
+		To download files larger than 2Gb please use a version of Internet Explorer later than version @ie.
+		We would recommend that you use at least version 9.0 of Internet Explorer.
+	</p>
+	<p></p>
+	<p>
+		It is also possible that you are using a later version of Internet Explorer in compatibility mode. 
+		If this is the case then it maybe safe to download files larger than 2Gb.
+	</p> 
+</div>
+}
+@if(ie >= 8.0 && ie < 9.0) {
+<div id="ie-warning">
+	<p>
+		The version of Internet Explorer you appear to be using (@ie) doesn't support downloads larger than 4Gb.
+		To download files larger than 4Gb please use a version of Internet Explorer later than version @ie.
+		We would recommend that you use at least version 9.0 of Internet Explorer.
+	</p>
+	<p></p>
+	<p>
+		It is also possible that you are using a later version of Internet Explorer in compatibility mode. 
+		If this is the case then it maybe safe to download files larger than 4Gb.
+	</p> 
+</div>
+}
+
+<h2 id="heading">
+Here, you will find all product major Base Releases, and any Maintenance Releases.
+Notations should be self-explanatory, but if in any doubt please contact GSD.
+</h2>
+
+<script src="@routes.Assets.at("javascripts/tree.js")" type="text/javascript"></script>
+<script type="text/javascript">
+	window.onload = function(){hide('releasesTree')}
+</script>
+
+<div id="releasesTree">
+	@if(products.getInfo()) { <div class="info_outer_wrapper"><pre class="info_text">@products.getInfo()</pre></div> }
+	<div style="padding-bottom: 1em">
+		<button onclick="hide('releasesTree')">Collapse All</button>
+		<button onclick="show('releasesTree')">Expand All</button>
+	</div>
+	@for(level1 <- products.getSortedChildren()) {
+		<div class="folder@level1.getClassString()" onclick="hideshow(this)">@level1.name</div>
+		<div class="child">
+		@if(level1.getInfo()) {
+			<div class="info_wrapper@level1.getClassString()">
+				<pre class="info_text">@level1.getInfo()</pre>
+			</div>
+		}
+		@for(level2 <- level1.getSortedChildren()) {
+			<div class="folder@level2.getClassString()" onclick="hideshow(this)">@level2.name</div>
+			<div class="child">
+			@if(level2.getInfo()) {
+				<div class="info_wrapper@level2.getClassString()">
+					<pre class="info_text">@level2.getInfo()</pre>
+				</div>
+			}
+			@for(level3 <- level2.getSortedChildren()) {
+				<a href="@routes.Releases.download(level1.name, level2.name, level3.name)">
+					<div class="document@level3.getClassString()">
+						<span class="fileLength">@level3.getSize() bytes</span>
+						<span>@level3.name</span>
+					</div>
+				</a>
+			}
+			</div>
+		}
+		</div>
+	}
+</div>
+
+}

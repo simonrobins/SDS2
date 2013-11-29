@@ -1,0 +1,3 @@
+AnalyticExplorer_V5.101_Dutch.zip,133,74.39
+AnalyticExplorer_V5.101_French.zip,132,74.39
+AnalyticExplorer_V5.101_German.zip,131,74.39

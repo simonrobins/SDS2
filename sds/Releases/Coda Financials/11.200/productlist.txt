@@ -1,0 +1,15 @@
+Assets_11.200.227.iso,2.261
+Cognos-Reporting_11.200.227.iso,41.261
+Financials-be_11.200.227.iso,12.261,19
+Financials-cse_11.200.227.iso,19.261,151
+ImagePost_11.200.227.iso,21.261
+Intelligence-for-IBM-AS400_11.200.227.iso,36.261
+Intelligence-for-OpenVMS_11.200.227.iso,36.261
+Intelligence_11.200.227.iso,36.261
+Invoice-Matching_11.200.227.iso,22.261
+Pre-InstallationTasks_11.200.227.iso,19.261
+Purchasing_11.200.227.iso,127.261
+Retail_11.200.227.iso,27.261
+Supplementary-Software_11.200.227.iso,1.261,99.48
+Supplementary-Software_001_11.200.227.iso,1.261,99.48
+XMLi_11.200.227.iso,35.261

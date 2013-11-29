@@ -1,0 +1,59 @@
+@(documents: data.DocumentNode)(ie: Double)
+
+@main()(ie)("support") {
+	
+	<h1>UNIT4 Support Area</h1>
+	
+	<h2 id="heading">
+	This area is allow Unit4 to make files that you request, such as SARs, available to you for download.
+	You can also upload small files to Unit4 if necessary. 
+	</h2>
+	
+	<script src="@routes.Assets.at("javascripts/tree.js")" type="text/javascript"></script>
+	<script type="text/javascript">
+		window.onload = function(){hide('supportTree')}
+	</script>
+	
+	@if(!documents.isEmpty()){
+		<div id="supportTree">
+			<div style="padding-bottom: 1em">
+				<button onclick="hide('supportTree')">Collapse All</button>
+				<button onclick="show('supportTree')">Expand All</button>
+			</div>
+			@for(level1 <- documents.getSortedChildren()) {
+				@if(level1.isDirectory) {
+					<div class="folder@level1.getClassString()" onclick="hideshow(this)">@level1.name</div>
+				} else {
+					<div class="document@level1.getClassString()">
+						<a href="@routes.SupportArea.download1(level1.name)">@level1.name</a>
+					</div>
+				}
+				<div class="child">
+				@for(level2 <- level1.getSortedChildren()) {
+					<div class="document@level2.getClassString()">
+						<a href="@routes.SupportArea.download2(level1.name, level2.name)">@level2.name</a>
+					</div>
+				}
+				</div>
+			}
+		</div>
+	}
+	
+	@if(helpers.SessionHelper.INSTANCE.hasReadOnlyAccess(session())) {
+		<hr/>
+	
+		<h2>Upload Support File</h2>
+		
+		@helper.form(action=routes.SupportArea.upload, 'enctype -> "multipart/form-data") {
+			<table>
+				<tr>
+					<td>File to upload: </td>
+					<td><input type="file" name="file"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Upload" /></td>
+				</tr>
+			</table>
+		}
+	}
+}

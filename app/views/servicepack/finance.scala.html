@@ -1,0 +1,116 @@
+@(info: String, version: String, servicepacks: List[Integer], products: Set[Integer], addon: models.AccountAddon) @main()()("servicepacks") {
+
+<script type="text/javascript">
+<!--
+@Html(tags.Scripts.platforms())
+@Html(tags.Scripts.databases())
+@Html(tags.Scripts.encodings())
+@Html(tags.Scripts.servicepacks())
+//-->
+</script>
+
+<script src="@routes.Assets.at("javascripts/products.js")" type="text/javascript"></script>
+
+<h1>UNIT4 Service Pack Area</h1>
+
+@if(info) {
+<pre id="info_text">@info</pre>
+} @helper.form(action=routes.Servicepack.download()) {
+<input type="hidden" id="version" name="version" value="@version">
+<!--input type="hidden" id="selectedPlatform" name="version" value="@addon.serverOs"-->
+<!--input type="hidden" id="selectedDatabase" name="version" value="@addon.databaseType"-->
+<!--input type="hidden" id="selectedEncoding" name="version" value="@addon.encoding"-->
+<fieldset>
+	<legend>Service Pack Archive</legend>
+	<table>
+		<tr>
+			<th>Product Version:</th>
+			<td>@version</td>
+		</tr>
+		<tr>
+			<th>Choose Service Pack Version:</th>
+			<td><select name="servicepack" id="servicepacks">
+				@if(servicepacks != null){
+                    @for(servicepack <- servicepacks) {
+				        <option>@servicepack</option>
+                    }
+                }
+			</select></td>
+		</tr>
+		<tr>
+			<th>Choose Platform:</th>
+			<td><select name="platform" id="platform" onchange="chooseDB();">
+					@for(key <- tags.Scripts.S_PLATFORMS) { @if(key._1 == addon.serverOs) {
+					<option value="@key._1" selected="selected">@key._2</option> } else {
+					<option value="@key._1">@key._2</option> } }
+			</select></td>
+		</tr>
+		<tr>
+			<th>Choose Database:</th>
+			<td>
+                <select name="database" id="database" onchange="chooseEnc();">
+                @for(key <- tags.Scripts.S_DATABASES) {
+                    @if(key._1 == addon.databaseType) {
+					    <option value="@key._1" selected="selected">@key._2</option>
+                    } else {
+					    <option value="@key._1">@key._2</option>
+                    }
+                }
+			</select>
+            </td>
+		</tr>
+		<tr>
+			<th>Choose Encoding:</th>
+			<td>
+                <select ect name="encoding" id="encoding">
+                    @for(key <- tags.Scripts.S_ENCODINGS) {
+                        @if(key._1 == addon.encoding) {
+	    				    <option value="@key._1" selected="selected">@key._2</option>
+                        } else {
+			    		    <option value="@key._1">@key._2</option>
+                        }
+                    }
+			    </select>
+            </td>
+		</tr>
+		<tr>
+			<td colspan="2"></td>
+		</tr>
+	</table>
+</fieldset>
+@if(flash().containsKey("select.value")) {
+<h3 style="color: red;">@flash().get("select.value")</h3>
+} else {
+<br />
+}
+<fieldset id="products">
+	<legend>Choose Products</legend>
+	<table width="100%">
+		<tr>
+			<td><input type="checkbox" name="assets" id="assets" @tags.Servicepack.checked(2, products) />Assets</td>
+			<td><input type="checkbox" name="billing" id="billing" @tags.Servicepack.checked(123, products) />Billing</td>
+			<td><input type="checkbox" name="customiser" id="customiser" @tags.Servicepack.checked(11, products) />Customiser</td>
+			<td><input type="checkbox" name="finance" id="finance" @tags.Servicepack.checked(12, products) />Financials
+				BE</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" name="pim" id="pim" @tags.Servicepack.checked(22, products) />Invoice
+				Matching</td>
+			<td><input type="checkbox" name="pop" id="pop" @tags.Servicepack.checked(127, products) />2
+				Control Spend</td>
+			<td><input type="checkbox" name="fin" id="fin" @tags.Servicepack.checked(19, products) />Financials
+				CSE</td>
+		</tr>
+		<tr>
+			<td>
+				<button onclick="doSelect(true); return false;">Select All</button>
+				<button onclick="doSelect(false); return false;">Select
+					None</button>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+<br />
+<input type="submit" value="Download" />
+<input type="submit" name="doc" value="Download release notes" />
+} }

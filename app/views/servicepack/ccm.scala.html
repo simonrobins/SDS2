@@ -1,0 +1,22 @@
+@(info: String, files: List[java.io.File])
+@main()()("servicepacks") {
+
+<h1>Coda Control Manager Distribution Area</h1>
+
+<div id="crumbtrail">Coda Control Manager</a></div>
+
+<br/>
+
+@if(info) {
+<pre id="info_text">@info</pre>
+}
+
+<div id="servicepack">
+@for(file <- files) {
+	<div class="file">
+		<span class="fileLength">@file.length() bytes</span>
+		<a href="@routes.Ccm.download(file.getName())">@file.getName()</a>
+	</div>
+}
+</div>
+}

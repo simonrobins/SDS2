@@ -1,0 +1,36 @@
+#releasesTree {
+	padding: 1em;
+}
+
+#releasesTree .folder, #releasesTree .folder0, #releasesTree .folder1 {
+	height: 32px;
+	line-height: 32px;
+	padding-left: 36px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/folder/root.png);
+}
+#releasesTree .folder0 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/0.png);
+}
+#releasesTree .folder1 {
+	padding-left: 68px;
+	background-image: url(/assets/images/folder/1.png);
+}
+
+#releasesTree .document00, #releasesTree .document01, #releasesTree .document10, #releasesTree .document11 {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 96px;
+	background-repeat: no-repeat;
+	background-image: url(/assets/images/document/00.png);
+}
+#releasesTree .document01 {
+	background-image: url(/assets/images/document/01.png);
+}
+#releasesTree .document10 {
+	background-image: url(/assets/images/document/10.png);
+}
+#releasesTree .document11 {
+	background-image: url(/assets/images/document/11.png);
+}

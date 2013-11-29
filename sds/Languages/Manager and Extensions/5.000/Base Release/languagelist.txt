@@ -1,0 +1,8 @@
+Manager_V5000172_AmericanEnglishLanguage.zip,202,78.43,149
+Manager_V5000172_DutchLanguage_001.zip,133,78.43,149
+Manager_V5000172_FrenchLanguage_001.zip,132,78.43,149
+Manager_V5000172_GermanLanguage_001.zip,131,78.43,149
+Manager_V5000172_DutchLanguage.zip,133,78.43,149
+Manager_V5000172_FrenchLanguage.zip,132,78.43,149
+Manager_V5000172_GermanLanguage.zip,131,78.43,149
+Manager_V5000172_HungarianLanguage.zip,136,78.43,149
