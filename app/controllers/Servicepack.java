@@ -127,9 +127,7 @@ public class Servicepack extends Controller
 		final File[] jars = root.listFiles(new FilenameFilter()
 			{
 				@Override
-				public boolean accept(final @Nullable
-				File arg0, final @Nullable
-				String arg1)
+				public boolean accept(final @Nullable File arg0, final @Nullable String arg1)
 				{
 					if(arg1 == null)
 						return false;
@@ -144,22 +142,18 @@ public class Servicepack extends Controller
 		final File[] zips = root.listFiles(new FilenameFilter()
 			{
 				@Override
-				public boolean accept(final @Nullable
-				File arg0, final @Nullable
-				String arg1)
+				public boolean accept(final @Nullable File arg0, final @Nullable String arg1)
 				{
 					return (arg1 == null) ? false : arg1.endsWith(".zip");
 				}
 			});
 
-		if(zips == null || zips.length == 0)
-			return internalServerError("No zip files found (" + root + ")");
-
 		final List<File> productList = new ArrayList<File>();
 		final Set<ProductVersion> products = new LinkedHashSet<ProductVersion>();
 
 		final File doc = new File(new File(Settings.SERVICEPACKS_FINANCE_DIR, path), pdfName);
-		productList.add(doc);
+		if(doc.exists())
+			productList.add(doc);
 
 		for(final File zip : zips)
 			productList.add(zip);

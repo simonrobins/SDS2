@@ -8,10 +8,6 @@ import com.avaje.ebean.Ebean;
 
 public class CompanyDownloadFinder
 {
-	protected CompanyDownloadFinder()
-	{
-	}
-
 	public static Set<CompanyDownload> findReference(String ref)
 	{
 		Set<CompanyDownload> cds = Ebean.find(CompanyDownload.class).where().eq("downloadRef", ref).eq("success", null).findSet();

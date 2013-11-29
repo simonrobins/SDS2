@@ -4,7 +4,7 @@
 	<target name="default" depends="dist, copy" description="description">
 	</target>
 	<target name="dist">
-		<exec executable="c:/Play/play-2.1.1/play.bat">
+		<exec executable="play.bat">
 			<arg value="dist" />
 		</exec>
 	</target>
@@ -13,7 +13,7 @@
 			<zipfileset file="*.bat" prefix="sds2-1.0-SNAPSHOT" />
 			<zipfileset file="conf/*.conf" prefix="sds2-1.0-SNAPSHOT" />
 			<zipfileset file="db/unittest.h2.db" prefix="sds2-1.0-SNAPSHOT/db" />
-			<zipfileset dir="nginx-1.4.2" prefix="sds2-1.0-SNAPSHOT/nginx" />
+			<zipfileset dir="nginx" prefix="sds2-1.0-SNAPSHOT/nginx" />
 			<zipfileset dir="sds" prefix="sds2-1.0-SNAPSHOT/sds" />
 		</zip>
 	</target>

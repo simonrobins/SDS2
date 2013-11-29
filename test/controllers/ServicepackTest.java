@@ -42,7 +42,7 @@ public class ServicepackTest extends AbstractTest
 		final Map<String, String> data = new LinkedHashMap<String, String>();
 		data.put("version", "12.000");
 		data.put("servicepack", "7");
-		data.put("platform", "WIN");
+data.put("platform", "WIN");
 		data.put("database", "ORA");
 		data.put("encoding", "ASC");
 		data.put("assets", "true");
@@ -137,7 +137,7 @@ public class ServicepackTest extends AbstractTest
 		data.put("encoding", "CP37");
 		data.put("assets", "true");
 		data.put("billing", "true");
-		data.put("customiser", "true");
+		data.put("customiser", "false");
 		data.put("finance", "true");
 		data.put("pim", "true");
 		data.put("pop", "true");
@@ -145,7 +145,7 @@ public class ServicepackTest extends AbstractTest
 
 		final Result result = post("/servicepack/download", data);
 		assertThat(status(result)).isEqualTo(SEE_OTHER);
-		assertThat(redirectLocation(result)).isEqualTo("/servicepack/stream/11.300-SP6-IBM-ORA-CP37-16383.zip/SDS00000001/460");
+		assertThat(redirectLocation(result)).isEqualTo("/servicepack/stream/11.300-SP6-IBM-ORA-CP37-16319.zip/SDS00000001/430");
 		assertThat(count(Databases.COMPANY_DOWNLOAD)).isEqualTo(8);
 	}
 
@@ -184,6 +184,7 @@ public class ServicepackTest extends AbstractTest
 	{
 		final Map<String, String> data = new LinkedHashMap<String, String>();
 		data.put("doc", "");
+		data.put("version", "11.300");
 
 		final Result result = post("/servicepack/download", data);
 		assertThat(status(result)).isEqualTo(OK);

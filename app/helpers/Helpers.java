@@ -103,7 +103,7 @@ public class Helpers
 			sop.setShippingOptions(1);
 
 			String type = product.getProduct().trim() + " - " + version.getVersion().trim();
-			if(build.getBuild() != null)
+			if(build != null && build.getBuild() != null)
 				type += " - " + build.getBuild().trim();
 			sop.setType(type);
 
@@ -156,11 +156,10 @@ public class Helpers
 			sop.setShippingOptions(5);
 
 			final ServicePack sp = getServicePack(product, version, df.getServicepack());
+
 			sop.setType(product.getProduct().trim() + " " + version.getVersion().trim());
 			sop.setServicePack(sp);
 			sop.setType(sop.getType() + " SP" + sp.getServicePackNumber());
-
-			Logger.debug("SOP=" + sop);
 
 			Ebean.save(sop);
 		}

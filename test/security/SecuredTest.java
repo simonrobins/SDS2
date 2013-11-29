@@ -44,4 +44,18 @@ public class SecuredTest
 		final Result result = route(fakeRequest("GET", "/support"));
 		Assertions.assertThat(status(result)).isEqualTo(UNAUTHORIZED);
 	}
+
+	@Test
+	public void testGetusernameWithNullContext()
+	{
+		Secured s = new Secured();
+		Assertions.assertThat(s.getUsername(null)).isNull();
+	}
+
+	@Test
+	public void testOnUnauthorizedWithNullContext()
+	{
+		Secured s = new Secured();
+		Assertions.assertThat(s.onUnauthorized(null)).isNotNull();
+	}
 }

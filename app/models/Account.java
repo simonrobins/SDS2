@@ -16,7 +16,6 @@ public class Account
 	@Column(name = "account_id")
 	private int id;
 	private String name;
-	@SuppressWarnings("unused")
 	private String download;
 	@OneToMany(mappedBy = "account")
 	private List<AccountContact> contacts;
