@@ -16,10 +16,10 @@ public class SubProduct
 	private Integer subProductTypeId;
 	private Integer productId;
 
-	// public Integer getId()
-	// {
-	// return id;
-	// }
+	 public Integer getId()
+	 {
+		 return id;
+	 }
 
 	public void setId(Integer id)
 	{

@@ -31,9 +31,9 @@ public class ShippingOrder
 
 	private String orderNo;
 
-	private final Date orderDt = new Date();
+	private Date orderDt = new Date();
 
-	private final Date changeDt = new Date();
+	private Date changeDt = new Date();
 
 	private String changeUid;
 
@@ -77,10 +77,10 @@ public class ShippingOrder
 		return acctLocationId;
 	}
 
-	// public void setAcctLocationId(int acctLocationId)
-	// {
-	// this.acctLocationId = acctLocationId;
-	// }
+	 public void setAcctLocationId(int acctLocationId)
+	 {
+		 this.acctLocationId = acctLocationId;
+	 }
 
 	public String getOrderNo()
 	{
@@ -107,18 +107,18 @@ public class ShippingOrder
 		return orderDt;
 	}
 
-	// public void setOrderDt(Date orderDt)
-	// {
-	// this.orderDt = orderDt;
-	// }
+	 public void setOrderDt(Date orderDt)
+	 {
+		 this.orderDt = orderDt;
+	 }
 
 	public Date getChangeDt()
 	{
 		return changeDt;
 	}
 
-	// public void setChangeDt(Date changeDt)
-	// {
-	// this.changeDt = changeDt;
-	// }
+	 public void setChangeDt(Date changeDt)
+	 {
+		 this.changeDt = changeDt;
+	 }
 }

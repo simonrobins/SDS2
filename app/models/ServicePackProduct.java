@@ -22,10 +22,10 @@ public class ServicePackProduct
 	@JoinColumn(name = "product_id", referencedColumnName = "product_id")
 	private Product product;
 
-	// public int getId()
-	// {
-	// return id;
-	// }
+	 public int getId()
+	 {
+		 return id;
+	 }
 
 	public void setId(int id)
 	{

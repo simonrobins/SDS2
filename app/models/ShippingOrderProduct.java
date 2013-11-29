@@ -45,7 +45,7 @@ public class ShippingOrderProduct
 
 	private char unicode;
 
-	private final Date changeDt = new Date();
+	private Date changeDt = new Date();
 
 	private String changeUid;
 
@@ -141,10 +141,10 @@ public class ShippingOrderProduct
 		return unicode;
 	}
 
-	// public void setUnicode(char unicode)
-	// {
-	// this.unicode = unicode;
-	// }
+	public void setUnicode(char unicode)
+	{
+		this.unicode = unicode;
+	}
 
 	public String getChangeUid()
 	{
@@ -171,8 +171,8 @@ public class ShippingOrderProduct
 		return changeDt;
 	}
 
-	// public void setChangeDt(Date changeDt)
-	// {
-	// this.changeDt = changeDt;
-	// }
+	 public void setChangeDt(Date changeDt)
+	 {
+		 this.changeDt = changeDt;
+	 }
 }
