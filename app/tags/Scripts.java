@@ -59,13 +59,11 @@ public class Scripts
 		for(final String key : keys)
 		{
 			final List<Integer> servicepacks = servicepackList.get(key);
-			if(servicepacks == null)
-				throw new NullPointerException("Empty service pack list");
 			Collections.sort(servicepacks);
 			Collections.reverse(servicepacks);
 
 			sb.append("\"" + key + "\":[");
-			for(int index = 0; index < 5 && index < servicepacks.size(); index++)
+			for(int index = 0; index < servicepacks.size(); index++)
 			{
 				sb.append("\"" + servicepacks.get(index) + "\",");
 			}
