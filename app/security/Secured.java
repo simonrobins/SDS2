@@ -11,8 +11,7 @@ import play.mvc.Security;
 public class Secured extends Security.Authenticator
 {
 	@Override
-	public @Nullable
-	String getUsername(final @Nullable Context ctx)
+	public @Nullable String getUsername(final @Nullable Context ctx)
 	{
 		if(ctx != null)
 			return SessionHelper.INSTANCE.getAccountIdAsString(ctx.session());
@@ -21,8 +20,7 @@ public class Secured extends Security.Authenticator
 	}
 
 	@Override
-	public @Nullable
-	Result onUnauthorized(final @Nullable Context ctx)
+	public @Nullable Result onUnauthorized(final @Nullable Context ctx)
 	{
 		if(ctx != null)
 			ctx.session().clear();
