@@ -18,7 +18,7 @@ public class ArchiveGenerator
 {
 	public enum Status
 	{
-		OK, GENERATING, EXISTS, CANT_DELETE, CANT_RENAME, EXCEPTION, NO_SPACE
+		OK, GENERATING, EXISTS, CANT_DELETE, CANT_RENAME, EXCEPTION, NO_SPACE, ZERO_FILES
 	}
 
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
@@ -48,6 +48,13 @@ public class ArchiveGenerator
 			return Status.GENERATING; // someone got here before us.
 		}
 
+		if(this.files.size() == 0)
+		{
+			Logger.info("No files to ");
+			locks.remove(archive);
+			return Status.ZERO_FILES;
+		}
+
 		final File archiveFile = new File(Settings.DOWNLOAD_DIR, archive);
 
 		if(archiveFile.exists())
@@ -66,7 +73,8 @@ public class ArchiveGenerator
 		while((Settings.TEMPORARY_DIR.getUsableSpace() < minFreeSpace) && (retainPeriod > minRetainPeriod))
 			housekeep(--retainPeriod);
 
-		if(Settings.TEMPORARY_DIR.getUsableSpace() < minFreeSpace)
+		long usableSpace = Settings.TEMPORARY_DIR.getUsableSpace();
+		if(usableSpace > 0 && usableSpace < minFreeSpace)
 		{
 			Logger.info("no space to generate " + archive);
 			return Status.NO_SPACE;
@@ -79,6 +87,7 @@ public class ArchiveGenerator
 		ZipOutputStream output = null;
 		try
 		{
+			tempFile.getParentFile().mkdirs();
 			output = new ZipOutputStream(new FileOutputStream(tempFile));
 
 			for(final File file : files)
@@ -103,6 +112,7 @@ public class ArchiveGenerator
 		}
 		catch(final Exception e)
 		{
+			tempFile.delete();
 			Logger.error("Error occurred generating " + archive, e);
 			return Status.EXCEPTION;
 		}
