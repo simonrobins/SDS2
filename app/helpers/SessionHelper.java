@@ -63,6 +63,7 @@ public class SessionHelper
 		}
 		catch(final Exception ex)
 		{
+			Logger.error(ex.getMessage(), ex);
 		}
 
 		return (access & flags) != 0;
@@ -120,6 +121,7 @@ public class SessionHelper
 		}
 		catch(final Exception ex)
 		{
+			Logger.error(ex.getMessage(), ex);
 			session.clear();
 			return null;
 		}
@@ -150,6 +152,7 @@ public class SessionHelper
 		}
 		catch(final Exception e)
 		{
+			Logger.error(e.getMessage(), e);
 			session.clear();
 			return 0;
 		}
@@ -172,7 +175,7 @@ public class SessionHelper
 		}
 		catch(final Exception ex)
 		{
-			Logger.error(ex.getMessage() == null ? "" : ex.getMessage(), ex);
+			Logger.error(ex.getMessage(), ex);
 			session.clear();
 			return null;
 		}
@@ -194,7 +197,7 @@ public class SessionHelper
 		}
 		catch(final Exception ex)
 		{
-			Logger.error(ex.getMessage() == null ? "" : ex.getMessage());
+			Logger.error(ex.getMessage());
 			session.clear();
 			return null;
 		}
