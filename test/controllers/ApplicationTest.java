@@ -23,6 +23,13 @@ public class ApplicationTest extends AbstractTest
 	}
 
 	@Test
+	public void testFullAccess()
+	{
+		final Result result = callAction(controllers.routes.ref.Secure.fullAccess("41724", "1678382192", "3f5f5c105462d19791978cb9a4bd6782"));
+		Assertions.assertThat(status(result)).isEqualTo(SEE_OTHER);
+	}
+
+	@Test
 	public void testInvalid()
 	{
 		deleteCompanyDownload();

@@ -36,4 +36,12 @@ public class GlobalTest extends AbstractTest
 		Result result = g.onError(null, new Exception());
 		Assertions.assertThat(status(result)).isEqualTo(INTERNAL_SERVER_ERROR);
 	}
+
+	@Test
+	public void testOnErrorRequestHeaderThrowableWithNullthrowable()
+	{
+		Global g = new Global();
+		Result result = g.onError(null, null);
+		Assertions.assertThat(status(result)).isEqualTo(INTERNAL_SERVER_ERROR);
+	}
 }

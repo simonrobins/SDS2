@@ -18,6 +18,12 @@ public class UtilitiesTest
 	private static FakeRequest request = new FakeRequest();
 
 	@Test
+	public void testNewUtilities()
+	{
+		Assertions.assertThat(new Utilities()).isNotNull();
+	}
+
+	@Test
 	public void testQuietCloseWithNullStream()
 	{
 		Utilities.quietClose(null);

@@ -146,7 +146,7 @@ data.put("platform", "WIN");
 		final Result result = post("/servicepack/download", data);
 		assertThat(status(result)).isEqualTo(SEE_OTHER);
 		assertThat(redirectLocation(result)).isEqualTo("/servicepack/stream/11.300-SP6-IBM-ORA-CP37-16319.zip/SDS00000001/430");
-		assertThat(count(Databases.COMPANY_DOWNLOAD)).isEqualTo(8);
+		assertThat(count(Databases.COMPANY_DOWNLOAD)).isEqualTo(7);
 	}
 
 	@Test

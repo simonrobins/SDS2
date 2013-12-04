@@ -77,12 +77,14 @@ public class ArchiveGeneratorTest
 	{
 		List<File> files = new ArrayList<File>();
 
+		(new File(Settings.TEMPORARY_DIR, ARCHIVE)).delete();
+		
 		ArchiveGenerator generator = new ArchiveGenerator(ARCHIVE, files, maxRetain, minRetain, minFreeSpace);
 		ArchiveGenerator.Status status = generator.run();
 
-		Assertions.assertThat(status).isEqualTo(ArchiveGenerator.Status.OK);
+		Assertions.assertThat(status).isEqualTo(ArchiveGenerator.Status.ZERO_FILES);
 		Assertions.assertThat(new File(Settings.TEMPORARY_DIR, ARCHIVE)).doesNotExist();
-		Assertions.assertThat(new File(Settings.DOWNLOAD_DIR, ARCHIVE)).exists();
+		Assertions.assertThat(new File(Settings.DOWNLOAD_DIR, ARCHIVE)).doesNotExist();
 	}
 
 	@Test
@@ -93,6 +95,7 @@ public class ArchiveGeneratorTest
 			(new File(Settings.DOWNLOAD_DIR, ARCHIVE)).createNewFile();
 
 			List<File> files = new ArrayList<File>();
+			files.add(new File("."));
 
 			ArchiveGenerator generator = new ArchiveGenerator(ARCHIVE, files, maxRetain, minRetain, minFreeSpace);
 			ArchiveGenerator.Status status = generator.run();
