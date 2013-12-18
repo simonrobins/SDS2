@@ -23,7 +23,7 @@ public class Language extends Controller
 {
 	public static Result index()
 	{
-		final int accountId = SessionHelper.INSTANCE.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session());
 		final Set<ProductVersion> allowedProducts = CodaSdsValidate.getProductVersionMap2(accountId);
 		final Set<Integer> allowedSubProducts = SdsValidate.INSTANCE.getSubProducts(accountId);
 
@@ -66,10 +66,10 @@ public class Language extends Controller
 
 	public static Result download(final String level1, final String level2, final String level3, final String lang, final String filename)
 	{
-		if(!SessionHelper.INSTANCE.hasDownloadAccess(session()))
+		if(!SessionHelper.hasDownloadAccess(session()))
 			return index();
 
-		final int accountId = SessionHelper.INSTANCE.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session());
 
 		final Set<ProductVersion> allowedProducts = CodaSdsValidate.getProductVersionMap2(accountId, true);
 		final Set<Integer> allowedSubProducts = SdsValidate.INSTANCE.getSubProducts(accountId);
@@ -83,10 +83,10 @@ public class Language extends Controller
 
 		if(products2.size() > 0 && allowedSubProducts.contains(languageList.languageId))
 		{
-			final int accountContactId = SessionHelper.INSTANCE.getAccountContactId(session());
+			final int accountContactId = SessionHelper.getAccountContactId(session());
 
 			String ref = "";
-			if(SessionHelper.INSTANCE.hasUpdateAccess(session()))
+			if(SessionHelper.hasUpdateAccess(session()))
 				ref = Helpers.updateShippingOrderLanguagePack(accountContactId, languageList, filename);
 
 			return redirect(routes.Language.redirect(level1, level2, level3, filename, ref));

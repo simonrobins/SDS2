@@ -14,7 +14,7 @@ public class Secured extends Security.Authenticator
 	public @Nullable String getUsername(final @Nullable Context ctx)
 	{
 		if(ctx != null)
-			return SessionHelper.INSTANCE.getAccountIdAsString(ctx.session());
+			return SessionHelper.getAccountIdAsString(ctx.session());
 		else
 			return null;
 	}

@@ -11,10 +11,10 @@ public class CipherTest
 	{
 		try
 		{
-			String string = Cipher.getInstance().aesEncoder("", "");
+			String string = Cipher.aesEncoder("", "");
 			Assertions.assertThat(string).isEqualTo(null);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			fail(e.getMessage());
 		}
@@ -25,10 +25,10 @@ public class CipherTest
 	{
 		try
 		{
-			String string = Cipher.getInstance().aesEncoder("0123456789ABCDEF", "0123456789ABCDEF");
+			String string = Cipher.aesEncoder("0123456789ABCDEF", "0123456789ABCDEF");
 			Assertions.assertThat(string).isEqualTo("jYNdDP>YutWF>otClMQhiDSvM2yfAxs1VnOMY<YeovY=");
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			fail("testAesEncoder");
 		}
@@ -39,10 +39,10 @@ public class CipherTest
 	{
 		try
 		{
-			String string = Cipher.getInstance().aesEncoder("", "0123456789ABCDEF");
+			String string = Cipher.aesEncoder("", "0123456789ABCDEF");
 			Assertions.assertThat(string).isEqualTo("NK8zbJ8DGzVWc4xj5h6i9g==");
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			fail("testAesEncoder");
 		}
@@ -53,10 +53,10 @@ public class CipherTest
 	{
 		try
 		{
-			String string = Cipher.getInstance().aesDecoder("jYNdDP>YutWF>otClMQhiDSvM2yfAxs1VnOMY<YeovY=", "0123456789ABCDEF");
+			String string = Cipher.aesDecoder("jYNdDP>YutWF>otClMQhiDSvM2yfAxs1VnOMY<YeovY=", "0123456789ABCDEF");
 			Assertions.assertThat(string).isEqualTo("0123456789ABCDEF");
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			fail("testAesDecoder");
 		}

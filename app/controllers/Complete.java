@@ -25,7 +25,7 @@ public class Complete extends Controller
 {
 	public static boolean testRef(final String ref)
 	{
-		final String account = SessionHelper.INSTANCE.getAccountIdAsString(session());
+		final String account = SessionHelper.getAccountIdAsString(session());
 
 		Logger.info("Testing download ref: " + account + ":" + ref);
 
@@ -40,7 +40,7 @@ public class Complete extends Controller
 	@Transactional
 	public static Result complete()
 	{
-		final String accountId = SessionHelper.INSTANCE.getAccountIdAsString(session());
+		final String accountId = SessionHelper.getAccountIdAsString(session());
 
 		final String[] parts = getUriParts();
 

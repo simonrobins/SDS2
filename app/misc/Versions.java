@@ -1,32 +1,25 @@
 package misc;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import play.Play;
 
 public class Versions
 {
-	@SuppressWarnings("serial")
-	private static Map<String, Integer> VERSIONS = new HashMap<String, Integer>()
-		{
-			{
-				put("11.200", 261);
-				put("11.300", 281);
-				put("12.000", 325);
-			}
-		};
-
 	public static Integer get(String version)
 	{
-		Integer versionId = VERSIONS.get(version);
-
-		if(versionId == null)
-			throw new NullPointerException(version);
-
-		return versionId;
+		return getObject().get(version);
 	}
 
 	public static boolean containsKey(String version)
 	{
-		return VERSIONS.containsKey(version);
+		return getObject().containsKey(version);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static Map<String, Integer> getObject()
+	{
+		Object object = Play.application().configuration().getObject("versions.mapping");
+		return (Map<String, Integer>) object;
 	}
 }

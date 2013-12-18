@@ -9,10 +9,6 @@ import com.avaje.ebean.Ebean;
 
 public class ServicePackProductFinder
 {
-	protected ServicePackProductFinder()
-	{
-	}
-
 	public static Set<Integer> getServicePackProducts()
 	{
 		final Set<ServicePackProduct> servicePackProducts = Ebean.find(ServicePackProduct.class).findSet();

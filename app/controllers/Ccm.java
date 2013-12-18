@@ -29,7 +29,7 @@ public class Ccm extends Controller
 	{
 		final Map<String, Set<ProductVersion>> files = ProductMap.parseProducts(fileFromPathComponents("servicepacks.txt"));
 
-		final int accountId = SessionHelper.INSTANCE.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session());
 
 		final Map<Integer, Set<Integer>> allowedProducts = CodaSdsValidate.getProductVersionMap(accountId);
 
@@ -53,7 +53,7 @@ public class Ccm extends Controller
 
 	public static Result download(final String filename)
 	{
-		if(!SessionHelper.INSTANCE.hasDownloadAccess(session()))
+		if(!SessionHelper.hasDownloadAccess(session()))
 			return ccm();
 
 		final Map<String, Set<ProductVersion>> files = ProductMap.parseProducts(fileFromPathComponents("servicepacks.txt"));
@@ -61,14 +61,14 @@ public class Ccm extends Controller
 		final File dir = fileFromPathComponents(filename);
 		if(dir.isFile())
 		{
-			final int accountContactId = SessionHelper.INSTANCE.getAccountContactId(session());
+			final int accountContactId = SessionHelper.getAccountContactId(session());
 
 			final Set<ProductVersion> servicePacks = files.get(filename);
 			final ProductVersion servicePack = servicePacks.iterator().next();
 			final ServicePack sp = ServicePackFinder.find(servicePack.productId);
 
 			String ref = "";
-			if(SessionHelper.INSTANCE.hasUpdateAccess(session()))
+			if(SessionHelper.hasUpdateAccess(session()))
 				ref = Helpers.updateShippingOrderServicePacks(accountContactId, sp, filename);
 
 			return redirect(routes.Ccm.stream(filename, ref));

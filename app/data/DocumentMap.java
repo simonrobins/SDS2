@@ -10,10 +10,6 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class DocumentMap
 {
-	protected DocumentMap()
-	{
-	}
-
 	private static File[] listFiles(final File file)
 	{
 		return listFiles(file, null);

@@ -47,7 +47,7 @@ public class Helpers
 
 		final Product language = Product.find(languageList.languageId);
 
-		for(final ProductVersion ids : languageList.getProducts())
+		for (final ProductVersion ids : languageList.getProducts())
 		{
 			final Product product = Product.find(ids.productId);
 			final Version version = Version.find(ids.versionId);
@@ -82,15 +82,12 @@ public class Helpers
 
 		int productOrderId = ShippingOrderProduct.getNextOne(products.size());
 
-		for(final ProductVersion ids : products)
+		for (final ProductVersion ids : products)
 		{
 			final Product product = Product.find(ids.productId);
 			final Version version = Version.find(ids.versionId);
 			final Build build = BuildFinder.find(ids.buildId);
 			final ShippingOrderProduct sop = new ShippingOrderProduct();
-
-			if(version == null)
-				throw new NullPointerException("version is null");
 
 			sop.setId(productOrderId++);
 			sop.setOrderId(orderId);
@@ -103,7 +100,7 @@ public class Helpers
 			sop.setShippingOptions(1);
 
 			String type = product.getProduct().trim() + " - " + version.getVersion().trim();
-			if(build != null && build.getBuild() != null)
+			if (build != null && build.getBuild() != null)
 				type += " - " + build.getBuild().trim();
 			sop.setType(type);
 
@@ -137,14 +134,11 @@ public class Helpers
 
 		int productOrderId = ShippingOrderProduct.getNextOne(products.size());
 
-		for(final ProductVersion ids : products)
+		for (final ProductVersion ids : products)
 		{
 			final Product product = Product.find(ids.productId);
 			final Version version = Version.find(ids.versionId);
 			final ShippingOrderProduct sop = new ShippingOrderProduct();
-
-			if(version == null)
-				throw new NullPointerException("version is null");
 
 			sop.setId(productOrderId++);
 			sop.setOrderId(orderId);
@@ -202,7 +196,7 @@ public class Helpers
 		int downloadId = CompanyDownload.getNextOne(products.size());
 		final String downloadRef = "SDS" + Settings.REFERENCE_FORMAT.format(downloadId);
 
-		for(final ProductVersion ids : products)
+		for (final ProductVersion ids : products)
 		{
 			final Product product = Product.find(ids.productId);
 			final Version version = Version.find(ids.versionId);
@@ -210,9 +204,9 @@ public class Helpers
 
 			cd.setId(downloadId++);
 			cd.setProduct(product);
-			if(language != null)
+			if (language != null)
 				cd.setSubProductId(language.getId());
-			if(df != null)
+			if (df != null)
 			{
 				cd.setServerOs(df.getPlatform());
 				cd.setDatabaseType(df.getDatabase());
@@ -225,7 +219,7 @@ public class Helpers
 			cd.setDownloadRef(downloadRef);
 			cd.setType(filename);
 
-			if(df != null)
+			if (df != null)
 			{
 				final ServicePack sp = getServicePack(product, version, df.getServicepack());
 				cd.setServicePack(sp);
@@ -258,7 +252,7 @@ public class Helpers
 
 		final SqlRow addon = Ebean.createSqlQuery(sql).setParameter("accountId", accountId).setParameter("version", version).findUnique();
 
-		if(addon == null)
+		if (addon == null)
 			return new AccountAddon("", "", "");
 		else
 			return new AccountAddon(addon.getString("server_os"), addon.getString("database_type"), addon.getString("encoding"));

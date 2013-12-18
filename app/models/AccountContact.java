@@ -14,8 +14,7 @@ public class AccountContact
 	@Id
 	@Column(name = "account_contact_id")
 	private int id;
-	private String username;
-	// private String password;
+	private String email;
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
@@ -30,14 +29,14 @@ public class AccountContact
 		this.id = id;
 	}
 
-	public String getUsername()
+	public String getEmail()
 	{
-		return username;
+		return email;
 	}
 
-	public void setUsername(String username)
+	public void setEmail(String email)
 	{
-		this.username = username;
+		this.email = email;
 	}
 
 	public Account getAccount()

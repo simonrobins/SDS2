@@ -31,17 +31,22 @@ import play.test.FakeRequest;
 
 public class AbstractTest
 {
-	protected static FakeApplication app;
-	protected static String cookies;
-	protected static QueryRunner run;
+	protected static FakeApplication	app;
+	protected static String				cookies;
+	protected static QueryRunner		run;
+
+	public static FakeApplication startApp(Map<String, String> configuration)
+	{
+		FakeApplication app = fakeApplication(configuration);
+		start(app);
+
+		return app;
+	}
 
 	@BeforeClass
 	public static void startApp()
 	{
-		Map<String, String> map = new HashMap<String, String>();
-
-		app = fakeApplication(map);
-		start(app);
+		app = startApp(new HashMap<String, String>());
 
 		run = new QueryRunner(DB.getDataSource());
 
@@ -138,7 +143,7 @@ public class AbstractTest
 		{
 			return run.query("SELECT COUNT(*) FROM " + table + " WHERE " + where, new ScalarHandler<Long>());
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -151,7 +156,7 @@ public class AbstractTest
 		{
 			return run.query("SELECT * FROM " + table, new MapListHandler());
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -164,7 +169,7 @@ public class AbstractTest
 		{
 			return run.query("SELECT * FROM " + table + " WHERE " + where, new MapListHandler());
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -177,7 +182,7 @@ public class AbstractTest
 		{
 			run.update("INSERT INTO " + table + "(" + fields + ")" + " VALUES (" + values + ")");
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -210,7 +215,7 @@ public class AbstractTest
 		{
 			run.update("DELETE FROM " + table);
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 			throw new RuntimeException(e);

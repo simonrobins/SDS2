@@ -27,7 +27,7 @@ public class SupportArea extends Controller
 {
 	public static Result index()
 	{
-		final String accountId = SessionHelper.INSTANCE.getAccountIdAsString(session());
+		final String accountId = SessionHelper.getAccountIdAsString(session());
 		if(accountId == null)
 			return internalServerError();
 
@@ -40,7 +40,7 @@ public class SupportArea extends Controller
 
 	public static Result download1(final String filename)
 	{
-		final String accountId = SessionHelper.INSTANCE.getAccountIdAsString(session());
+		final String accountId = SessionHelper.getAccountIdAsString(session());
 		if(accountId == null)
 			return notFound(filename);
 
@@ -58,7 +58,7 @@ public class SupportArea extends Controller
 
 	public static Result download2(final String level1, final String filename)
 	{
-		final String accountId = SessionHelper.INSTANCE.getAccountIdAsString(session());
+		final String accountId = SessionHelper.getAccountIdAsString(session());
 		if(accountId == null)
 			return internalServerError();
 
@@ -96,7 +96,7 @@ public class SupportArea extends Controller
 			final String filename = filepart.getFilename();
 			final File srcFile = filepart.getFile();
 
-			final String accountId = SessionHelper.INSTANCE.getAccountIdAsString(session());
+			final String accountId = SessionHelper.getAccountIdAsString(session());
 			if(accountId == null)
 				return internalServerError();
 

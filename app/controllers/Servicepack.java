@@ -43,7 +43,7 @@ public class Servicepack extends Controller
 {
 	public static Result index()
 	{
-		final int accountId = SessionHelper.INSTANCE.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session());
 		if(Logger.isDebugEnabled())
 			Logger.of("servicepack").debug("account_id = " + accountId);
 
@@ -70,7 +70,7 @@ public class Servicepack extends Controller
 	{
 		final Integer versionId = Versions.get(version);
 
-		final int accountId = SessionHelper.INSTANCE.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session());
 		if(Logger.isDebugEnabled())
 			Logger.of("servicepack").debug("account_id = " + accountId);
 
@@ -90,14 +90,14 @@ public class Servicepack extends Controller
 		if(Logger.isDebugEnabled())
 			Logger.of("servicepack").debug("servicepacks=" + servicepacks);
 
-		final AccountAddon addon = Helpers.getAccountAddon(SessionHelper.INSTANCE.getAccountId(session()), version);
+		final AccountAddon addon = Helpers.getAccountAddon(SessionHelper.getAccountId(session()), version);
 
 		return ok(views.html.servicepack.finance.render(getInfo(), version, servicepacks, allowedProducts, addon));
 	}
 
 	public static Result download()
 	{
-		if(!SessionHelper.INSTANCE.hasDownloadAccess(session()))
+		if(!SessionHelper.hasDownloadAccess(session()))
 			return index();
 
 		final Form<Download> filledForm = new Form<Download>(Download.class).bindFromRequest();
@@ -294,10 +294,10 @@ public class Servicepack extends Controller
 
 		final String size = calculateArchiveSize(productList);
 
-		final int accountContactId = SessionHelper.INSTANCE.getAccountContactId(session());
+		final int accountContactId = SessionHelper.getAccountContactId(session());
 
 		String ref = "";
-		if(SessionHelper.INSTANCE.hasUpdateAccess(session()))
+		if(SessionHelper.hasUpdateAccess(session()))
 			ref = Helpers.updateShippingOrderServicePacks(accountContactId, products, df, archive);
 
 		return redirect(routes.Servicepack.stream(archive, ref, size));

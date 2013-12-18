@@ -67,7 +67,7 @@ public class UtilitiesTest
 					throws IOException
 				{
 					called = true;
-					throw new IOException();
+					throw new IOException("Inside testQuietCloseIOException");
 				}
 
 				@Override

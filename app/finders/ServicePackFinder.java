@@ -8,10 +8,6 @@ import com.avaje.ebean.Ebean;
 
 public class ServicePackFinder
 {
-	protected ServicePackFinder()
-	{
-	}
-
 	public static ServicePack find(final int servicepackId)
 	{
 		return Ebean.find(ServicePack.class, servicepackId);

@@ -26,8 +26,8 @@ public class Secure extends Controller
 			try
 			{
 				session().clear();
-				SessionHelper.INSTANCE.setContact(session(), contact);
-				SessionHelper.INSTANCE.setAccess(session(), access);
+				SessionHelper.setContact(session(), contact);
+				SessionHelper.setAccess(session(), access);
 
 				return redirect(routes.Application.index());
 			}

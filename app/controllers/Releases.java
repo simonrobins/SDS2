@@ -25,7 +25,7 @@ public class Releases extends Controller
 {
 	public static Result index()
 	{
-		final int accountId = SessionHelper.INSTANCE.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session());
 		final Set<ProductVersion> allowed = CodaSdsValidate.getProductVersionMap2(accountId);
 
 		final ProductNode products = ProductMap.getProductMap();
@@ -38,14 +38,14 @@ public class Releases extends Controller
 
 	public static Result download(final String level1, final String level2, final String filename)
 	{
-		if(!SessionHelper.INSTANCE.hasDownloadAccess(session()))
+		if(!SessionHelper.hasDownloadAccess(session()))
 			return index();
 
 		final File file = Utilities.fileFromPathComponents(Settings.RELEASES_DIR, level1, level2, filename);
 		if(!file.exists())
 			return notFound(file);
 
-		final int accountId = SessionHelper.INSTANCE.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session());
 		final Set<ProductVersion> allowedProducts2 = CodaSdsValidate.getProductVersionMap2(accountId, true);
 
 		final AbstractNode releases = ProductMap.getProductMap();
@@ -60,8 +60,8 @@ public class Releases extends Controller
 			return notFound(file);
 
 		String ref = "";
-		if(SessionHelper.INSTANCE.hasUpdateAccess(session()))
-			ref = Helpers.updateShippingOrderReleases(SessionHelper.INSTANCE.getAccountContactId(session()), products, file);
+		if(SessionHelper.hasUpdateAccess(session()))
+			ref = Helpers.updateShippingOrderReleases(SessionHelper.getAccountContactId(session()), products, file);
 
 		return redirect(routes.Releases.redirect(level1, level2, filename, ref).url());
 	}

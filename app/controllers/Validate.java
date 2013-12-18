@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import misc.FileListing;
 import misc.ServicepackContents;
@@ -31,6 +34,9 @@ import data.ProductVersion;
 
 public class Validate extends Controller
 {
+	private static Pattern	releasesPattern		= Pattern.compile("^(productlist\\.txt)|(info\\.txt)|(.+\\.md5)|(.+\\.gz)|(.+~)$");
+	private static Pattern	languagesPattern	= Pattern.compile("^(languagelist\\.txt)|(info\\.txt)|(.+\\.md5)|(.+\\.gz)|(.+~)$");
+
 	public static Result index()
 	{
 		return ok(views.html.validate.index.render());
@@ -39,161 +45,158 @@ public class Validate extends Controller
 	public static Result missingProducts()
 	{
 		final Promise<List<String>> promiseOfList = Akka.future(new Callable<List<String>>()
+		{
+			@Override
+			public List<String> call()
 			{
-				@Override
-				public List<String> call()
-				{
-					return findMissing(Settings.RELEASES_DIR, "productlist.txt");
-				}
-			});
+				return findMissing(Settings.RELEASES_DIR, "productlist.txt");
+			}
+		});
 
 		return async(promiseOfList.map(new Function<List<String>, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable List<String> releases)
 			{
-				@Override
-				public Result apply(final @Nullable List<String> releases)
-				{
-					return ok(views.html.validate.missingProducts.render(releases));
-				}
-			}));
+				return ok(views.html.validate.missingProducts.render(releases));
+			}
+		}));
 	}
 
 	public static Result unmappedProducts()
 	{
 		final Promise<List<String>> promiseOfList = Akka.future(new Callable<List<String>>()
+		{
+			@Override
+			public List<String> call()
 			{
-				@Override
-				public List<String> call()
-				{
-					return findUnmapped(true, 4);
-				}
-			});
+				return findUnmapped(true, 4);
+			}
+		});
 
 		return async(promiseOfList.map(new Function<List<String>, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable List<String> releases)
 			{
-				@Override
-				public Result apply(final @Nullable List<String> releases)
-				{
-					return ok(views.html.validate.missingProducts.render(releases));
-				}
-			}));
+				return ok(views.html.validate.missingProducts.render(releases));
+			}
+		}));
 	}
 
 	public static Result missingLanguages()
 	{
 		final Promise<List<String>> promiseOfList = Akka.future(new Callable<List<String>>()
+		{
+			@Override
+			public List<String> call()
 			{
-				@Override
-				public List<String> call()
-				{
-					return findMissing(Settings.LANGUAGEPACKS_DIR, "languagelist.txt");
-				}
-			});
+				return findMissing(Settings.LANGUAGEPACKS_DIR, "languagelist.txt");
+			}
+		});
 
 		return async(promiseOfList.map(new Function<List<String>, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable List<String> languages)
 			{
-				@Override
-				public Result apply(final @Nullable List<String> languages)
-				{
-					return ok(views.html.validate.missingLanguages.render(languages));
-				}
-			}));
+				return ok(views.html.validate.missingLanguages.render(languages));
+			}
+		}));
 	}
 
 	public static Result unmappedLanguages()
 	{
-		final Promise<List<String>> promiseOfList = Akka.future(new Callable<List<String>>()
+		final Promise<List<String>> promiseOfList = Akka.timeout(new Callable<List<String>>()
+		{
+			@Override
+			public List<String> call()
 			{
-				@Override
-				public List<String> call()
-				{
-					return findUnmapped(false, 5);
-				}
-			});
+				return findUnmapped(false, 5);
+			}
+		}, 30L, TimeUnit.SECONDS);
 
 		return async(promiseOfList.map(new Function<List<String>, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable List<String> languages)
 			{
-				@Override
-				public Result apply(final @Nullable List<String> languages)
-				{
-					return ok(views.html.validate.missingLanguages.render(languages));
-				}
-			}));
+				return ok(views.html.validate.missingLanguages.render(languages));
+			}
+		}));
 	}
 
 	public static Result releases()
 	{
 		final Promise<ProductNode> promiseOfList = Akka.future(new Callable<ProductNode>()
+		{
+			@Override
+			public ProductNode call()
 			{
-				@Override
-				public ProductNode call()
-				{
-					return ProductMap._getProductMap();
-				}
-			});
+				return ProductMap._getProductMap();
+			}
+		});
 
 		return async(promiseOfList.map(new Function<ProductNode, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable ProductNode products)
 			{
-				@Override
-				public Result apply(final @Nullable ProductNode products)
-				{
-					return ok(views.html.validate.releases.render(products));
-				}
-			}));
+				return ok(views.html.validate.releases.render(products));
+			}
+		}));
 	}
 
 	public static Result languages()
 	{
 		final Promise<LanguageNode> promiseOfList = Akka.future(new Callable<LanguageNode>()
+		{
+			@Override
+			public LanguageNode call()
 			{
-				@Override
-				public LanguageNode call()
-				{
-					return LanguageMap.getLanguageMap();
-				}
-			});
+				return LanguageMap.getLanguageMap();
+			}
+		});
 
 		return async(promiseOfList.map(new Function<LanguageNode, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable LanguageNode languages)
 			{
-				@Override
-				public Result apply(final @Nullable LanguageNode languages)
-				{
-					return ok(views.html.validate.languages.render(languages));
-				}
-			}));
+				return ok(views.html.validate.languages.render(languages));
+			}
+		}));
 	}
 
 	public static Result servicepacks()
 	{
 		final Promise<Map<File, List<String>>> promiseOfList = Akka.future(new Callable<Map<File, List<String>>>()
-			{
-				@Override
-				public Map<File, List<String>> call()
-				{
-					return getMissing();
-				}
-			});
-
-		return async(promiseOfList.map(new Function<Map<File, List<String>>, Result>()
-			{
-				@Override
-				public Result apply(final @Nullable Map<File, List<String>> servicepacks)
-				{
-					return ok(views.html.validate.servicepacks.render(servicepacks));
-				}
-			}));
-	}
-
-	private final static FileFilter sps = new FileFilter()
 		{
 			@Override
-			public boolean accept(final @Nullable File file)
+			public Map<File, List<String>> call()
 			{
-				if(file == null)
-					return false;
-				else
-					return file.isDirectory() && file.getName().matches("\\d\\d\\.\\d\\d\\d\\-SP\\d\\d?");
+				return getMissing();
 			}
-		};
+		});
+
+		return async(promiseOfList.map(new Function<Map<File, List<String>>, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable Map<File, List<String>> servicepacks)
+			{
+				return ok(views.html.validate.servicepacks.render(servicepacks));
+			}
+		}));
+	}
+
+	private final static FileFilter	sps	= new FileFilter()
+										{
+											@Override
+											public boolean accept(final File file)
+											{
+												return file.isDirectory() && file.getName().matches("\\d\\d\\.\\d\\d\\d\\-SP\\d\\d?");
+											}
+										};
 
 	private static Map<File, List<String>> getMissing()
 	{
@@ -201,16 +204,16 @@ public class Validate extends Controller
 
 		File[] spDirs = Settings.SERVICEPACKS_FINANCE_DIR.listFiles(sps);
 
-		if(spDirs != null)
+		if (spDirs != null)
 		{
-			for(final File spDir : spDirs)
+			for (final File spDir : spDirs)
 			{
 				final String version = spDir.getName().substring(0, 6);
 				final String shortVersion = version.substring(0, 2) + version.substring(3, 4);
 
 				final List<File> files = FileListing.getFileListing(spDir);
 
-				if(files.size() == 0)
+				if (files.size() == 0)
 					continue;
 
 				final String firstFile = files.get(0).getName();
@@ -220,90 +223,90 @@ public class Validate extends Controller
 				String[] exes = ServicepackContents.EXES120;
 				String[] oass = ServicepackContents.OASS120;
 
-				if("11.200".equals(version))
+				if ("11.200".equals(version))
 				{
 					tars = ServicepackContents.TARS112;
 					exes = ServicepackContents.EXES112;
 					oass = ServicepackContents.OASS112;
 				}
-				else if("11.300".equals(version))
+				else if ("11.300".equals(version))
 				{
 					tars = ServicepackContents.TARS113;
 					exes = ServicepackContents.EXES113;
 					oass = ServicepackContents.OASS113;
 				}
 
-				found: for(final String jar : ServicepackContents.JARS)
+				found: for (final String jar : ServicepackContents.JARS)
 				{
 					final String name = jar + "-" + version + "." + build + ".jar";
 
-					for(final File file : files)
+					for (final File file : files)
 					{
-						if(file.getName().equals(name))
+						if (file.getName().equals(name))
 							continue found;
 					}
 
 					addMissing(missing, spDir, name);
 				}
 
-				found: for(final String tar : tars)
+				found: for (final String tar : tars)
 				{
 					final String name = tar + "-" + version + "." + build + ".tar.Z";
 
-					for(final File file : files)
+					for (final File file : files)
 					{
-						if(file.getName().equals(name))
+						if (file.getName().equals(name))
 							continue found;
 					}
 
 					addMissing(missing, spDir, name);
 				}
 
-				found: for(final String exe : exes)
+				found: for (final String exe : exes)
 				{
 					final String name = exe + "-" + version + "." + build + ".exe";
 
-					for(final File file : files)
+					for (final File file : files)
 					{
-						if(file.getName().equals(name))
+						if (file.getName().equals(name))
 							continue found;
 					}
 
 					addMissing(missing, spDir, name);
 				}
 
-				found: for(final String oas : oass)
+				found: for (final String oas : oass)
 				{
 					final String name = "V" + shortVersion + oas;
 
-					for(final File file : files)
+					for (final File file : files)
 					{
-						if(file.getName().equals(name))
+						if (file.getName().equals(name))
 							continue found;
 					}
 
 					addMissing(missing, spDir, name);
 				}
 
-				found: for(final String core : ServicepackContents.CORES)
+				found: for (final String core : ServicepackContents.CORES)
 				{
 					final String name = core + "-" + version + "." + build + ".exe";
 
-					for(final File file : files)
+					for (final File file : files)
 					{
-						if(file.getName().equals(name))
+						if (file.getName().equals(name))
 							continue found;
 					}
 
 					addMissing(missing, spDir, name);
 				}
 
-				found: for(final String pdf : ServicepackContents.PDFS)
+				found: for (final String pdf : ServicepackContents.PDFS)
 				{
 					final String name = pdf + spDir.getName() + ".pdf";
-					for(final File file : files)
+					for (final File file : files)
 					{
-						if(file.getName().equals(name))
+						if (file.getName().equals(name))
 							continue found;
 					}
 
@@ -318,7 +321,7 @@ public class Validate extends Controller
 	{
 		List<String> list = missing.get(spDir);
 
-		if(list == null)
+		if (list == null)
 			list = new ArrayList<String>();
 
 		list.add(name);
@@ -330,14 +333,14 @@ public class Validate extends Controller
 	{
 		final List<String> missing = new ArrayList<String>();
 
-		for(final File file : FileListing.getFileListing(dir, filename))
+		for (final File file : FileListing.getFileListing(dir, filename))
 		{
 			final Map<String, Set<ProductVersion>> fileList = ProductMap.parseProducts(file);
 
-			for(final String name : fileList.keySet())
+			for (final String name : fileList.keySet())
 			{
 				final File filex = new File(file.getParentFile(), name);
-				if(!filex.exists())
+				if (!filex.exists())
 				{
 					final String relativePath = filex.getAbsolutePath().substring(dir.getAbsolutePath().length());
 					missing.add(relativePath);
@@ -350,58 +353,57 @@ public class Validate extends Controller
 		return missing;
 	}
 
-	private static List<String> findUnmapped(final boolean releases, final int length)
+	protected static List<String> findUnmapped(final boolean releases, final int length)
 	{
 		final List<String> missing = new ArrayList<String>();
 
 		final File root = releases ? Settings.RELEASES_DIR : Settings.LANGUAGEPACKS_DIR;
 		final List<File> files = FileListing.getFileListing(root);
 
-		for(final File file : files)
+		for (final File file : files)
 		{
 			final String path = file.getAbsolutePath().substring(root.getAbsolutePath().length());
 			String[] parts = path.split("\\\\");
 
-			if(parts.length == length && parts[0].length() == 0)
+			if (parts.length == length && parts[0].length() == 0)
 			{
 				final String[] normalisedParts = new String[length - 1];
 				System.arraycopy(parts, 1, normalisedParts, 0, length - 1);
 				parts = normalisedParts;
 			}
 
-			if(parts.length != length - 1)
+			if (parts.length != length - 1)
 				missing.add(path);
 			else
 			{
-				String pattern;
-
-				if(releases)
-					pattern = "^(productlist\\.txt)|(info\\.txt)|(.+\\.md5)|(.+\\.gz)|(.+~)$";
+				final Matcher matcher;
+				if (releases)
+					matcher = releasesPattern.matcher(parts[length - 2]);
 				else
-					pattern = "^(languagelist\\.txt)|(info\\.txt)|(.+\\.md5)|(.+\\.gz)|(.+~)$";
+					matcher = languagesPattern.matcher(parts[length - 2]);
 
-				final boolean matches = parts[length - 2].matches(pattern);
+				final boolean matches = matcher.matches();
 
-				if(matches == false)
+				if (matches == false)
 				{
 					try
 					{
-						if(releases)
+						if (releases)
 						{
 							final ProductNode products = ProductMap.getProductMap();
 							final ProductNode product = products.get(parts[0], parts[1], parts[2]);
-							if(product == null)
+							if (product == null)
 								missing.add(path);
 						}
 						else
 						{
 							final LanguageNode languages = LanguageMap.getLanguageMap();
 							final LanguageNode language = languages.find(parts[0], parts[1], parts[2], parts[3]);
-							if(language == null)
+							if (language == null)
 								missing.add(path);
 						}
 					}
-					catch(final Exception ex)
+					catch (final Exception ex)
 					{
 						missing.add(path);
 					}

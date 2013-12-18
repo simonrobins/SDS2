@@ -21,20 +21,18 @@ public class FileListing
 	public static List<File> getFileListing(final File dir, final String filename)
 	{
 		final FileFilter ff = new FileFilter()
+		{
+			@Override
+			public boolean accept(final @Nullable File file)
 			{
-				@Override
-				public boolean accept(final @Nullable File file)
-				{
-					if(file == null)
-						return false;
-					else if(file.isDirectory())
-						return true;
-					else if(filename.equals(file.getName()))
-						return true;
-					else
-						return false;
-				}
-			};
+				if (file.isDirectory())
+					return true;
+				else if (filename.equals(file.getName()))
+					return true;
+				else
+					return false;
+			}
+		};
 
 		final List<File> files = new ArrayList<File>();
 
@@ -47,9 +45,9 @@ public class FileListing
 	{
 		final File[] filesAndDirs = dir.listFiles(ff);
 
-		for(final File file : filesAndDirs)
+		for (final File file : filesAndDirs)
 		{
-			if(file.isDirectory())
+			if (file.isDirectory())
 			{
 				getFilteredFileListing(files, file, ff);
 			}
@@ -64,9 +62,9 @@ public class FileListing
 	{
 		final File[] filesAndDirs = dir.listFiles();
 
-		for(final File file : filesAndDirs)
+		for (final File file : filesAndDirs)
 		{
-			if(file.isDirectory())
+			if (file.isDirectory())
 			{
 				getFileListing(files, file);
 			}

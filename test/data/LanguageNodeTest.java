@@ -1,34 +1,43 @@
 package data;
 
-import static org.junit.Assert.fail;
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.start;
+import static play.test.Helpers.stop;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.fest.assertions.Assertions;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import play.test.FakeApplication;
+import controllers.AbstractTest;
 
 public class LanguageNodeTest
 {
-	private LanguageNode node;
+	private static FakeApplication	app;
+	private LanguageNode			node;
+
+	@BeforeClass
+	public static void startApp()
+	{
+		app = AbstractTest.startApp(new HashMap<String, String>());
+	}
+
+	@AfterClass
+	public static void stopApp()
+	{
+		stop(app);
+	}
 
 	@Before
 	public void before()
 	{
-		Map<String, String> map = new HashMap<String, String>();
-		FakeApplication app = fakeApplication(map);
-		start(app);
-
 		node = LanguageMap.getLanguageMap().get("Coda Financials", "11.200", "SP17", "Dutch", "FinancialsBE_V11200SP17_DutchLanguage.zip");
 	}
 
@@ -56,46 +65,10 @@ public class LanguageNodeTest
 	}
 
 	@Test
-	public void testLanguageNodeFile()
-	{
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLanguageNodeString()
-	{
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLanguageNodeFileBoolean()
-	{
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLanguageNodeInt()
-	{
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLanguageNodeFileLanguageProduct()
-	{
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetLanguage()
 	{
 		LanguageNode node = new LanguageNode(new File("."));
 		Assertions.assertThat(node).isNotNull();
 		Assertions.assertThat(node.getLanguage()).isNull();
-	}
-
-	@Test
-	public void testGetProducts()
-	{
-		fail("Not yet implemented");
 	}
 }

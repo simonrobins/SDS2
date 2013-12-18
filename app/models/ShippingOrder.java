@@ -2,8 +2,6 @@ package models;
 
 import helpers.Helpers;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,25 +15,19 @@ public class ShippingOrder
 {
 	@Id
 	@Column(name = "order_id")
-	private int id;
+	private int				id;
 
 	@ManyToOne
 	@JoinColumn(name = "account_id", referencedColumnName = "account_id")
-	private Account account;
+	private Account			account;
 
 	@ManyToOne
 	@JoinColumn(name = "account_contact_id", referencedColumnName = "account_contact_id")
-	private AccountContact contact;
+	private AccountContact	contact;
 
-	private int acctLocationId;
+	private String			orderNo;
 
-	private String orderNo;
-
-	private Date orderDt = new Date();
-
-	private Date changeDt = new Date();
-
-	private String changeUid;
+	private String			changeUid;
 
 	public static int getNextOne(int reserve)
 	{
@@ -72,16 +64,6 @@ public class ShippingOrder
 		this.contact = contact;
 	}
 
-	public int getAcctLocationId()
-	{
-		return acctLocationId;
-	}
-
-	 public void setAcctLocationId(int acctLocationId)
-	 {
-		 this.acctLocationId = acctLocationId;
-	 }
-
 	public String getOrderNo()
 	{
 		return orderNo;
@@ -101,24 +83,4 @@ public class ShippingOrder
 	{
 		this.changeUid = changeUid;
 	}
-
-	public Date getOrderDt()
-	{
-		return orderDt;
-	}
-
-	 public void setOrderDt(Date orderDt)
-	 {
-		 this.orderDt = orderDt;
-	 }
-
-	public Date getChangeDt()
-	{
-		return changeDt;
-	}
-
-	 public void setChangeDt(Date changeDt)
-	 {
-		 this.changeDt = changeDt;
-	 }
 }

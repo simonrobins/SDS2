@@ -39,7 +39,7 @@
 		</div>
 	}
 	
-	@if(helpers.SessionHelper.INSTANCE.hasReadOnlyAccess(session())) {
+	@if(helpers.SessionHelper.hasReadOnlyAccess(session())) {
 		<hr/>
 	
 		<h2>Upload Support File</h2>

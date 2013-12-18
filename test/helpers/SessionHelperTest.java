@@ -2,7 +2,6 @@ package helpers;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import controllers.AbstractTest;
 
 public class SessionHelperTest extends AbstractTest
 {
-	private static Http.Session session;
+	private static Http.Session	session;
 
 	@BeforeClass
 	public static void startApp2()
@@ -32,56 +31,59 @@ public class SessionHelperTest extends AbstractTest
 	}
 
 	@Test
+	public void testExceptionOnNullAccess()
+	{
+		setAccess(null);
+		assertTrue(SessionHelper.hasReadOnlyAccess(session));
+	}
+
+	@Test
 	public void testHasReadOnlyAccess()
 	{
-		assertTrue(SessionHelper.INSTANCE.hasReadOnlyAccess(session));
+		assertTrue(SessionHelper.hasReadOnlyAccess(session));
 
 		setAccess("");
-		assertTrue(SessionHelper.INSTANCE.hasReadOnlyAccess(session));
+		assertTrue(SessionHelper.hasReadOnlyAccess(session));
 
 		setAccess("0");
-		assertTrue(SessionHelper.INSTANCE.hasReadOnlyAccess(session));
+		assertTrue(SessionHelper.hasReadOnlyAccess(session));
+
+		setAccess("3");
+		assertFalse(SessionHelper.hasReadOnlyAccess(session));
 	}
 
 	@Test
 	public void testHasUpdateAccess()
 	{
-		assertFalse(SessionHelper.INSTANCE.hasUpdateAccess(session));
+		assertFalse(SessionHelper.hasUpdateAccess(session));
 
 		setAccess("");
-		assertFalse(SessionHelper.INSTANCE.hasUpdateAccess(session));
+		assertFalse(SessionHelper.hasUpdateAccess(session));
 
 		setAccess("1");
-		assertTrue(SessionHelper.INSTANCE.hasUpdateAccess(session));
+		assertTrue(SessionHelper.hasUpdateAccess(session));
 
 		setAccess("3");
-		assertTrue(SessionHelper.INSTANCE.hasUpdateAccess(session));
+		assertTrue(SessionHelper.hasUpdateAccess(session));
 	}
 
 	@Test
 	public void testHasDownloadAccess()
 	{
-		assertFalse(SessionHelper.INSTANCE.hasDownloadAccess(session));
+		assertFalse(SessionHelper.hasDownloadAccess(session));
 
 		setAccess("");
-		assertFalse(SessionHelper.INSTANCE.hasDownloadAccess(session));
+		assertFalse(SessionHelper.hasDownloadAccess(session));
 
 		setAccess("2");
-		assertTrue(SessionHelper.INSTANCE.hasDownloadAccess(session));
+		assertTrue(SessionHelper.hasDownloadAccess(session));
 
 		setAccess("3");
-		assertTrue(SessionHelper.INSTANCE.hasDownloadAccess(session));
+		assertTrue(SessionHelper.hasDownloadAccess(session));
 	}
 
 	private void setAccess(String access)
 	{
-		try
-		{
-			SessionHelper.INSTANCE.setAccess(session, access);
-		}
-		catch(Exception e)
-		{
-			fail();
-		}
+		SessionHelper.setAccess(session, access);
 	}
 }

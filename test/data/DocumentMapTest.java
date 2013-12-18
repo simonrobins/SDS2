@@ -1,7 +1,5 @@
 package data;
 
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.start;
 import static play.test.Helpers.stop;
 
 import java.util.HashMap;
@@ -13,19 +11,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import play.test.FakeApplication;
+import controllers.AbstractTest;
 
 public class DocumentMapTest
 {
-	protected static FakeApplication app;
+	protected static FakeApplication	app;
 
 	@BeforeClass
 	public static void startApp()
 	{
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sds.download.dir", "\\SDS\\Missing\\");
+		Map<String, String> configuration = new HashMap<String, String>();
+		configuration.put("sds.download.dir", "\\SDS\\Missing\\");
 
-		app = fakeApplication(map);
-		start(app);
+		app = AbstractTest.startApp(configuration);
 	}
 
 	@AfterClass

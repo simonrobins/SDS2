@@ -1,11 +1,9 @@
 package data;
 
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.start;
+import static play.test.Helpers.stop;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import models.Product;
@@ -14,6 +12,7 @@ import org.fest.assertions.Assertions;
 import org.junit.Test;
 
 import play.test.FakeApplication;
+import controllers.AbstractTest;
 
 public class LanguageProductTest
 {
@@ -38,10 +37,7 @@ public class LanguageProductTest
 	@Test
 	public void testGetLanguage()
 	{
-		Map<String, String> map = new HashMap<String, String>();
-
-		FakeApplication app = fakeApplication(map);
-		start(app);
+		FakeApplication app = AbstractTest.startApp(new HashMap<String, String>());
 
 		Product p = new Product();
 		p.setId(1);
@@ -50,18 +46,19 @@ public class LanguageProductTest
 		LanguageProduct lp = new LanguageProduct(null, 1, null);
 		Assertions.assertThat(lp).isNotNull();
 		Assertions.assertThat(lp.getLanguage().toString()).isEqualTo(p.toString());
+
+		stop(app);
 	}
 
 	@Test
 	public void testGetInvalidLanguage()
 	{
-		Map<String, String> map = new HashMap<String, String>();
-
-		FakeApplication app = fakeApplication(map);
-		start(app);
+		FakeApplication app = AbstractTest.startApp(new HashMap<String, String>());
 
 		LanguageProduct lp = new LanguageProduct(null, 0, null);
 		Assertions.assertThat(lp).isNotNull();
 		Assertions.assertThat(lp.getLanguage()).isNull();
+
+		stop(app);
 	}
 }
