@@ -13,9 +13,6 @@ import java.util.regex.Pattern;
 
 import misc.Settings;
 import misc.Utilities;
-
-import org.eclipse.jdt.annotation.Nullable;
-
 import play.Logger;
 
 public class LanguageMap
@@ -27,13 +24,11 @@ public class LanguageMap
 	{
 		return file.listFiles(new FilenameFilter()
 		{
+			@SuppressWarnings("null")
 			@Override
-			public boolean accept(final @Nullable File dir, final @Nullable String name)
+			public boolean accept(final File dir, final String name)
 			{
-				if (name == null)
-					return false;
-				else
-					return !(name.equalsIgnoreCase("info.txt") || name.equalsIgnoreCase("information.txt"));
+				return !(name.equalsIgnoreCase("info.txt") || name.equalsIgnoreCase("information.txt"));
 			}
 		});
 	}
@@ -49,14 +44,14 @@ public class LanguageMap
 		{
 			if (product.isDirectory())
 			{
-				final LanguageNode level1 = new LanguageNode(product, true);
+				final LanguageNode level1 = new LanguageNode(product);
 				languageTree.appendChild(level1);
 
 				for (final File version : listFiles(product))
 				{
 					if (version.isDirectory())
 					{
-						final LanguageNode level2 = new LanguageNode(version, true);
+						final LanguageNode level2 = new LanguageNode(version);
 						level1.appendChild(level2);
 
 						for (final File release : listFiles(version))
@@ -68,7 +63,7 @@ public class LanguageMap
 							}
 							if (release.isDirectory())
 							{
-								final LanguageNode level3 = new LanguageNode(release, true);
+								final LanguageNode level3 = new LanguageNode(release);
 								level2.appendChild(level3);
 
 								final File productTxt = new File(release, "languagelist.txt");

@@ -28,13 +28,16 @@ public class ProductVersion
 		this.productId = productId;
 		this.versionId = versionId;
 		this.buildId = buildId;
+
+		if (products.containsKey(productId) == false)
+			products.put(productId, Product.find(productId));
+		if (versions.containsKey(versionId) == false)
+			versions.put(versionId, Version.find(versionId));
 	}
 
 	public boolean valid()
 	{
-		populate();
-
-		return (products.containsKey(productId) == false) && (versions.containsKey(versionId) == false);
+		return (products.containsKey(productId) == true) && (versions.containsKey(versionId) == true);
 	}
 
 	@Override
@@ -60,8 +63,6 @@ public class ProductVersion
 	@Override
 	public String toString()
 	{
-		populate();
-
 		Product p = products.get(productId);
 		Version v = versions.get(versionId);
 
@@ -69,13 +70,5 @@ public class ProductVersion
 		final String version = (v == null) ? "null[" + versionId + "]" : v.getVersion().trim() + "[" + productId + "]";
 
 		return product + " - " + version;
-	}
-
-	private void populate()
-	{
-		if (products.containsKey(productId) == false)
-			products.put(productId, Product.find(productId));
-		if (versions.containsKey(versionId) == false)
-			versions.put(versionId, Version.find(versionId));
 	}
 }

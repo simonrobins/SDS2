@@ -1,5 +1,0 @@
-2ControlExpenses_V1600121_DutchLanguage.zip,133,130.353
-2ControlExpenses_V1600121_FrenchLanguage.zip,132,130.353
-2ControlExpenses_V1600121_GermanLanguage.zip,131,130.353
-2ControlExpenses_V1600121_HungarianLanguage.zip,136,130.353
-2ControlExpenses_V1600121_AmericanEnglishLanguage.zip,202,130.353

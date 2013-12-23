@@ -38,7 +38,8 @@ public class LanguageNodeTest
 	@Before
 	public void before()
 	{
-		node = LanguageMap.getLanguageMap().get("Coda Financials", "11.200", "SP17", "Dutch", "FinancialsBE_V11200SP17_DutchLanguage.zip");
+		LanguageNode map = LanguageMap.getLanguageMap();
+		node = map.get("Coda Financials", "11.200", "SP17", "Dutch", "FinancialsBE_V11200SP17_DutchLanguage.zip");
 	}
 
 	@Test

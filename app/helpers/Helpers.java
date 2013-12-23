@@ -234,11 +234,10 @@ public class Helpers
 	@Transactional
 	public static int getNextOne(final String table, final String id, int reserve)
 	{
-		int lastOne;
+		String item = table + "." + id;
+		Counter counter = CounterFinder.find(item);
 
-		Counter counter = CounterFinder.find(table + "." + id);
-
-		lastOne = counter.getLastOne();
+		int lastOne = counter.getLastOne();
 		counter.setLastOne(lastOne + reserve);
 
 		Ebean.save(counter);

@@ -5,8 +5,6 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 public class FileListing
 {
 	public static List<File> getFileListing(final File dir)
@@ -23,7 +21,7 @@ public class FileListing
 		final FileFilter ff = new FileFilter()
 		{
 			@Override
-			public boolean accept(final @Nullable File file)
+			public boolean accept(@SuppressWarnings("null") final File file)
 			{
 				if (file.isDirectory())
 					return true;

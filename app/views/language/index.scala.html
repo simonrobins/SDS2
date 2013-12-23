@@ -1,4 +1,4 @@
-@(languages: data.AbstractNode)(ie: Double)
+@(languages: data.LanguageNode)(ie: Double)
 
 @main()(ie)("languagepacks") {
 
@@ -16,44 +16,44 @@ Here you will find the latest language packs for all supported versions of our p
 </script>
 
 <div id="languageTree">
-	@if(languages.getInfo()) { <div class="info_outer_wrapper"><pre id="info_text">@languages.getInfo()</pre></div> }
+	@if(languages.info) { <div class="info_outer_wrapper"><pre id="info_text">@languages.info</pre></div> }
 	<div style="padding-bottom: 1em">
 		<button onclick="hide('languageTree')">Collapse All</button>
 		<button onclick="show('languageTree')">Expand All</button>
 	</div>
 	@for(level1 <- languages.getSortedChildren()) {
-		<div class="folder@level1.getClassString()" onclick="hideshow(this)">@level1.name</div>
+		<div class="folder@level1.getClassString()" onclick="hideshow(this)">@level1.language</div>
 		<div class="child">
-		@if(level1.getInfo()) {
+		@if(level1.info) {
 			<div class="info_wrapper@level1.getClassString()">
-				<pre id="info_text">@level1.getInfo()</pre>
+				<pre id="info_text">@level1.info</pre>
 			</div>
 		}
 		@for(level2 <- level1.getSortedChildren()) {
-			<div class="folder@level2.getClassString()" onclick="hideshow(this)">@level2.name</div>
+			<div class="folder@level2.getClassString()" onclick="hideshow(this)">@level2.language</div>
 			<div class="child">
-			@if(level2.getInfo()) { <pre id="info_text">@level2.getInfo()</pre> }
+			@if(level2.info) { <pre id="info_text">@level2.info</pre> }
 			@for(level3 <- level2.getSortedChildren()) {
 				@if(level3.getChildren()isEmpty()) {
-					<a href="@routes.Language.install(level1.name, level2.name, level3.name)">
+					<a href="@routes.Language.install(level1.language, level2.language, level3.language)">
 						<div class="document@level3.getClassString()">
 							<span class="fileLength">@level3.getSize() bytes</span>
-							<span>@level3.name</span>
+							<span>@level3.language</span>
 						</div>
 					</a>
 				} else {
-					<div class="folder@level3.getClassString()" onclick="hideshow(this)">@level3.name</div>
+					<div class="folder@level3.getClassString()" onclick="hideshow(this)">@level3.language</div>
 					<div class="child">
-					@if(level3.getInfo()) { <pre id="info_text">@level3.getInfo()</pre> }
+					@if(level3.info) { <pre id="info_text">@level3.info</pre> }
 					@for(level4 <- level3.getSortedChildren()) {
-						<div class="folder@level4.getClassString()" onclick="hideshow(this)">@level4.name</div>
+						<div class="folder@level4.getClassString()" onclick="hideshow(this)">@level4.language</div>
 						<div class="child">
-						@if(level4.getInfo()) { <pre id="info_text">@level4.getInfo()</pre> }
+						@if(level4.info) { <pre id="info_text">@level4.info</pre> }
 						@for(level5 <- level4.getSortedChildren()) {
-							<a href="@routes.Language.download(level1.name, level2.name, level3.name, level4.name, level5.name)">
+							<a href="@routes.Language.download(level1.language, level2.language, level3.language, level4.language, level5.language)">
 								<div class="document@level5.getClassString()">
 									<span class="fileLength">@level5.getSize() bytes</span>
-									<span>@level5.name</span>
+									<span>@level5.language</span>
 								</div>
 							</a>
 						}

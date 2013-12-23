@@ -1,6 +1,7 @@
 package helpers;
 
 import misc.Settings;
+import misc.Utilities;
 import models.AccountContact;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -45,9 +46,6 @@ public class SessionHelper
 		try
 		{
 			String accessValue = session.get(ACCESS);
-			if (accessValue == null)
-				return false;
-
 			String secret = Settings.APPLICATION_SECRET;
 
 			final String accessString = Cipher.aesDecoder(accessValue, secret);
@@ -74,43 +72,40 @@ public class SessionHelper
 		}
 	}
 
-	static public void setContact(final Session session, final AccountContact contact) throws Exception
+	static public void setContact(final Session session, final AccountContact contact, String secret)
 	{
 		final String accountId = new Integer(contact.getAccount().getId()).toString();
-		final String encryptAccountId = Cipher.aesEncoder(accountId, Settings.APPLICATION_SECRET);
+		final String encryptAccountId = Cipher.aesEncoder(accountId, secret);
 
 		final String company = contact.getAccount().getName();
-		final String encryptCompany = Cipher.aesEncoder(company, Settings.APPLICATION_SECRET);
+		final String encryptCompany = Cipher.aesEncoder(company, secret);
 
 		final String accountContactId = new Integer(contact.getId()).toString();
-		final String encryptAccountContactId = Cipher.aesEncoder(accountContactId, Settings.APPLICATION_SECRET);
+		final String encryptAccountContactId = Cipher.aesEncoder(accountContactId, secret);
 
 		final String email = contact.getEmail();
-		final String encryptEmail = Cipher.aesEncoder(email, Settings.APPLICATION_SECRET);
+		final String encryptEmail = Cipher.aesEncoder(email, secret);
 
-		if (encryptAccountId != null && encryptCompany != null && encryptAccountContactId != null && encryptEmail != null)
+		session.clear();
+
+		if (Utilities.isNotEmpty(encryptAccountId) && Utilities.isNotEmpty(encryptCompany) && Utilities.isNotEmpty(encryptAccountContactId) && Utilities.isNotEmpty(encryptEmail))
 		{
 			session.put(ACCOUNT_ID, encryptAccountId);
 			session.put(ACCOUNT_NAME, encryptCompany);
 			session.put(ACCOUNT_CONTACT_ID, encryptAccountContactId);
 			session.put(EMAIL, encryptEmail);
 		}
-		else
-			session.clear();
 
 		Logger.info(email + " for (" + company + ") logged in");
 	}
 
 	@Nullable
-	static public String getAccountIdAsString(final Session session)
+	static public String getAccountIdAsString(final Session session, String secret)
 	{
 		try
 		{
 			final String encryptAccountId = session.get(ACCOUNT_ID);
-			if (encryptAccountId == null)
-				return null;
-			else
-				return Cipher.aesDecoder(encryptAccountId, Settings.APPLICATION_SECRET);
+			return Cipher.aesDecoder(encryptAccountId, secret);
 		}
 		catch (final Exception ex)
 		{
@@ -120,48 +115,34 @@ public class SessionHelper
 		}
 	}
 
-	static public int getAccountId(final Session session)
+	static public Integer getAccountId(final Session session, String secret)
 	{
-		String accountId = getAccountIdAsString(session);
-		if (accountId == null)
-			throw new NumberFormatException("null");
-		return Integer.parseInt(accountId);
+		String accountId = getAccountIdAsString(session, secret);
+		return new Integer(accountId);
 	}
 
-	static public int getAccountContactId(final Session session)
+	static public Integer getAccountContactId(final Session session, String secret)
 	{
 		try
 		{
 			final String encryptAccountContactId = session.get(ACCOUNT_CONTACT_ID);
-			if (encryptAccountContactId == null)
-				throw new NullPointerException("encryptAccountContactId is null");
-
-			String secret = Settings.APPLICATION_SECRET;
-			if (secret == null)
-				throw new NullPointerException("secret is null");
-
 			final String accountContactId = Cipher.aesDecoder(encryptAccountContactId, secret);
-			return Integer.parseInt(accountContactId);
+			return new Integer(accountContactId);
 		}
 		catch (final Exception e)
 		{
 			Logger.error(e.getMessage(), e);
 			session.clear();
-			return 0;
+			throw new RuntimeException(e);
 		}
 	}
 
 	@Nullable
-	static public String getAccountName(final Session session)
+	static public String getAccountName(final Session session, String secret)
 	{
 		try
 		{
 			String account = session.get(ACCOUNT_NAME);
-			if (account == null)
-				throw new NullPointerException("account is null");
-
-			String secret = Settings.APPLICATION_SECRET;
-
 			return Cipher.aesDecoder(account, secret);
 		}
 		catch (final Exception ex)
@@ -173,15 +154,11 @@ public class SessionHelper
 	}
 
 	@Nullable
-	static public String getAccountUsername(final Session session)
+	static public String getAccountUsername(final Session session, String secret)
 	{
 		try
 		{
 			String username = session.get(EMAIL);
-			if (username == null)
-				throw new NullPointerException("username is null");
-			String secret = Settings.APPLICATION_SECRET;
-
 			return Cipher.aesDecoder(username, secret);
 		}
 		catch (final Exception ex)

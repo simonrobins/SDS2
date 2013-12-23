@@ -23,11 +23,11 @@ public class DirectoryTemplate
 {
 	private static class Config
 	{
-		public final int version;
-		public final int number;
-		public final String[] tars;
-		public final String[] exes;
-		public final String[] oass;
+		public final int		version;
+		public final int		number;
+		public final String[]	tars;
+		public final String[]	exes;
+		public final String[]	oass;
 
 		public Config(int version, int number, String[] tars, String[] exes, String[] oass)
 		{
@@ -46,16 +46,14 @@ public class DirectoryTemplate
 		}
 	}
 
-	private static Config[] configs =
-		{
-			new Config(112, 5, ServicepackContents.TARS112, ServicepackContents.EXES112, ServicepackContents.OASS112), new Config(113, 6, ServicepackContents.TARS113, ServicepackContents.EXES113, ServicepackContents.OASS113), new Config(120, 7, ServicepackContents.TARS120, ServicepackContents.EXES120, ServicepackContents.OASS120),
-		};
+	private static Config[]	configs	=
+									{ new Config(112, 5, ServicepackContents.TARS112, ServicepackContents.EXES112, ServicepackContents.OASS112), new Config(113, 6, ServicepackContents.TARS113, ServicepackContents.EXES113, ServicepackContents.OASS113), new Config(120, 7, ServicepackContents.TARS120, ServicepackContents.EXES120, ServicepackContents.OASS120), };
 
 	public static final void main(String[] args)
 	{
 		start(fakeApplication());
 
-		for(Config config : configs)
+		for (Config config : configs)
 			DirectoryTemplate.populateServicepack(config);
 
 		DirectoryTemplate.populateReleases();
@@ -68,24 +66,24 @@ public class DirectoryTemplate
 
 		final ProductNode tree = ProductMap.getProductMap();
 
-		for(final AbstractNode level1 : tree.getChildren())
+		for (final AbstractNode level1 : tree.getChildren())
 		{
 			final File file1 = new File(src, level1.name);
 			System.out.println(level1.name);
 
-			for(final AbstractNode level2 : level1.getChildren())
+			for (final AbstractNode level2 : level1.getChildren())
 			{
 				final File file2 = new File(file1, level2.name);
 				System.out.println("  " + level2.name);
 
-				for(final AbstractNode level3 : level2.getChildren())
+				for (final AbstractNode level3 : level2.getChildren())
 				{
 					final File file3 = new File(file2, level3.name);
 					System.out.println("    " + level3.name);
 
 					try
 					{
-						if(!file3.exists())
+						if (!file3.exists())
 						{
 							file3.createNewFile();
 							final FileWriter fw = new FileWriter(file3);
@@ -94,7 +92,7 @@ public class DirectoryTemplate
 							bw.close();
 						}
 					}
-					catch(final Exception e)
+					catch (final Exception e)
 					{
 						Logger.error("populateLanguages", e);
 					}
@@ -109,42 +107,42 @@ public class DirectoryTemplate
 
 		final LanguageNode tree = LanguageMap.getLanguageMap();
 
-		for(final AbstractNode level1 : tree.getChildren())
+		for (final LanguageNode level1 : tree.getChildren())
 		{
-			final File file1 = new File(src, level1.name);
-			System.out.println(level1.name);
+			final File file1 = new File(src, level1.language);
+			System.out.println(level1.language);
 
-			for(final AbstractNode level2 : level1.getChildren())
+			for (final LanguageNode level2 : level1.getChildren())
 			{
-				final File file2 = new File(file1, level2.name);
-				System.out.println("  " + level2.name);
+				final File file2 = new File(file1, level2.language);
+				System.out.println("  " + level2.language);
 
-				for(final AbstractNode level3 : level2.getChildren())
+				for (final LanguageNode level3 : level2.getChildren())
 				{
-					final File file3 = new File(file2, level3.name);
-					System.out.println("    " + level3.name);
+					final File file3 = new File(file2, level3.language);
+					System.out.println("    " + level3.language);
 
-					for(final AbstractNode level4 : level3.getChildren())
+					for (final LanguageNode level4 : level3.getChildren())
 					{
-						System.out.println("    " + level4.name);
+						System.out.println("    " + level4.language);
 
-						for(final AbstractNode level5 : level4.getChildren())
+						for (final LanguageNode level5 : level4.getChildren())
 						{
-							final File file5 = new File(file3, level5.name);
-							System.out.println("    " + level5.name);
+							final File file5 = new File(file3, level5.language);
+							System.out.println("    " + level5.language);
 
 							try
 							{
-								if(!file5.exists())
+								if (!file5.exists())
 								{
 									file5.createNewFile();
 									final FileWriter fw = new FileWriter(file5);
 									final BufferedWriter bw = new BufferedWriter(fw);
-									bw.write("Releases/" + level1.name + "/" + level2.name + "/" + level3.name + "/" + level4.name);
+									bw.write("Releases/" + level1.language + "/" + level2.language + "/" + level3.language + "/" + level4.language);
 									bw.close();
 								}
 							}
-							catch(final Exception e)
+							catch (final Exception e)
 							{
 								Logger.error("populateLanguages", e);
 							}
@@ -168,7 +166,7 @@ public class DirectoryTemplate
 	{
 		final File base = makeDirs(config);
 
-		for(String baseName : ServicepackContents.JARS)
+		for (String baseName : ServicepackContents.JARS)
 		{
 			String jarName = baseName + "-" + config.getVersion() + ".1234.jar";
 			File jar = new File(base, jarName);
@@ -181,7 +179,7 @@ public class DirectoryTemplate
 	{
 		final File base = makeDirs(config, "core-client");
 
-		for(String baseName : ServicepackContents.CORES)
+		for (String baseName : ServicepackContents.CORES)
 		{
 			String jarName = baseName + "-" + config.getVersion() + ".1234.exe";
 			File jar = new File(base, jarName);
@@ -194,7 +192,7 @@ public class DirectoryTemplate
 	{
 		final File base = makeDirs(config, "finance-app");
 
-		for(String baseName : config.tars)
+		for (String baseName : config.tars)
 		{
 			String jarName = baseName + "-" + config.getVersion() + ".1234.tar.Z";
 			File jar = new File(base, jarName);
@@ -207,7 +205,7 @@ public class DirectoryTemplate
 	{
 		final File base = makeDirs(config, "finance-app");
 
-		for(String baseName : config.exes)
+		for (String baseName : config.exes)
 		{
 			String jarName = baseName + "-" + config.getVersion() + ".1234.exe";
 			File jar = new File(base, jarName);
@@ -220,7 +218,7 @@ public class DirectoryTemplate
 	{
 		final File base = makeDirs(config, "finance-app");
 
-		for(String baseName : config.oass)
+		for (String baseName : config.oass)
 		{
 			String jarName = "V" + config.version + baseName;
 			File jar = new File(base, jarName);
@@ -233,7 +231,7 @@ public class DirectoryTemplate
 	{
 		try
 		{
-			if(!jar.exists())
+			if (!jar.exists())
 			{
 				jar.createNewFile();
 				final FileWriter fw = new FileWriter(jar);
@@ -242,7 +240,7 @@ public class DirectoryTemplate
 				bw.close();
 			}
 		}
-		catch(final Exception e)
+		catch (final Exception e)
 		{
 			Logger.error("createFile", e);
 		}
@@ -258,7 +256,7 @@ public class DirectoryTemplate
 		final File root = Settings.SERVICEPACKS_FINANCE_DIR;
 
 		File base = new File(root, config.getVersion() + "-SP" + config.number);
-		if(dir != null)
+		if (dir != null)
 			base = new File(base, dir);
 
 		base.mkdirs();
@@ -266,4 +264,3 @@ public class DirectoryTemplate
 		return base;
 	}
 }
-

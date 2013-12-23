@@ -12,22 +12,20 @@ import java.util.concurrent.ConcurrentHashMap;
 import misc.Languages;
 import misc.Utilities;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
-@NonNullByDefault
 public abstract class AbstractNode implements Comparable<AbstractNode>
 {
-	public final String name;
+	public final String						name;
 
-	private AbstractNode parent = null;
+	private AbstractNode					parent		= null;
 
-	private final File file;
-	private long size = -1;
-	private Boolean isDirectory = Boolean.FALSE;
-	private String info = null;
+	private File							file		= null;
+	private long							size		= -1;
+	private Boolean							isDirectory	= Boolean.FALSE;
+	private String							info		= null;
 
-	private final Map<String, AbstractNode> children = new ConcurrentHashMap<String, AbstractNode>();
+	private final Map<String, AbstractNode>	children	= new ConcurrentHashMap<String, AbstractNode>();
 
 	public abstract void intersect(Collection<ProductVersion> allowed);
 
@@ -46,7 +44,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 
 	protected AbstractNode(final String info)
 	{
-		this.file = null;
+		this.info = info;
 		this.name = "root";
 	}
 
@@ -71,7 +69,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 
 	public long getSize()
 	{
-		if(size == -1 && file != null)
+		if (size == -1 && file != null)
 			size = file.length();
 
 		return size;
@@ -79,10 +77,10 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 
 	public boolean isDirectory()
 	{
-		if(this.isDirectory == null && this.file != null)
+		if (this.isDirectory == null && this.file != null)
 			this.isDirectory = this.file.isDirectory();
 
-		if(this.isDirectory == null)
+		if (this.isDirectory == null)
 			return true;
 
 		return isDirectory;
@@ -91,7 +89,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 	public @Nullable
 	String getInfo()
 	{
-		if(this.info == null && this.file != null && isDirectory())
+		if (this.info == null && this.file != null && isDirectory())
 			this.info = Utilities.getInformation(this.file);
 
 		return this.info;
@@ -105,7 +103,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 
 	public Collection<AbstractNode> getChildren()
 	{
-		if(children.isEmpty())
+		if (children.isEmpty())
 			return Collections.emptyList();
 		else
 			return new ArrayList<AbstractNode>(this.children.values());
@@ -113,7 +111,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 
 	public List<AbstractNode> getSortedChildren()
 	{
-		if(children.isEmpty())
+		if (children.isEmpty())
 			return Collections.emptyList();
 		else
 		{
@@ -127,7 +125,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 	{
 		StringBuffer sb = new StringBuffer();
 
-		for(AbstractNode parent = this; parent != null && parent.parent != null; parent = parent.parent)
+		for (AbstractNode parent = this; parent != null && parent.parent != null; parent = parent.parent)
 		{
 			sb.insert(0, parent.isLastChild() ? "1" : "0");
 		}
@@ -137,7 +135,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 
 	public boolean isLastChild()
 	{
-		if(this.parent == null)
+		if (this.parent == null)
 			return false;
 
 		List<AbstractNode> children = this.parent.getSortedChildren();
@@ -148,7 +146,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 	@Override
 	public int compareTo(final @Nullable AbstractNode o)
 	{
-		if(o == null)
+		if (o == null)
 			throw new NullPointerException();
 
 		return name.compareTo(o.name);
@@ -156,7 +154,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 
 	public void removeIfNoChildren(final AbstractNode child)
 	{
-		if(child.children.isEmpty())
+		if (child.children.isEmpty())
 			removeChild(child);
 	}
 
@@ -169,73 +167,14 @@ public abstract class AbstractNode implements Comparable<AbstractNode>
 	ProductNode get(final String a, final String b, final String c)
 	{
 		final AbstractNode level1 = this.children.get(a);
-		if(level1 == null)
+		if (level1 == null)
 			throw new NullPointerException("level1 is null");
 		final AbstractNode level2 = level1.children.get(b);
-		if(level2 == null)
+		if (level2 == null)
 			throw new NullPointerException("level2 is null");
 		final AbstractNode level3 = level2.children.get(c);
 
 		return (ProductNode) level3;
-	}
-
-	public LanguageNode get(final String a, final String b, final String c, final String d, final String e)
-	{
-		final AbstractNode level1 = this.children.get(a);
-		if(level1 == null)
-			throw new NullPointerException("level1 is null");
-		final AbstractNode level2 = level1.children.get(b);
-		if(level2 == null)
-			throw new NullPointerException("level2 is null");
-		final AbstractNode level3 = level2.children.get(c);
-		if(level3 == null)
-			throw new NullPointerException("level3 is null");
-		final AbstractNode level4 = level3.children.get(d);
-		if(level4 == null)
-			throw new NullPointerException("level4 is null");
-		final AbstractNode level5 = level4.children.get(e);
-		if(level5 == null)
-			throw new NullPointerException("level5 is null");
-		return (LanguageNode) level5;
-	}
-
-	public @Nullable
-	LanguageNode find(final String a, final String b, final String c, final String d)
-	{
-		final AbstractNode level1 = this.children.get(a);
-		if(level1 == null)
-			throw new NullPointerException("level1 is null");
-		final AbstractNode level2 = level1.children.get(b);
-		if(level2 == null)
-			throw new NullPointerException("level2 is null");
-		final AbstractNode level3 = level2.children.get(c);
-		if(level3 == null)
-			throw new NullPointerException("level3 is null");
-		for(final AbstractNode level4 : level3.children.values())
-		{
-			final AbstractNode level5 = level4.children.get(d);
-			if(level5 != null)
-				return (LanguageNode) level5;
-		}
-
-		return null;
-	}
-
-	public String getDisplayLanguage()
-	{
-		LanguageNode self = (LanguageNode) this;
-		LanguageProduct language = self.getLanguage();
-
-		if(language == null)
-			return "Language not found";
-
-		final String[] langs = Languages.get(language.languageId).split(" ");
-
-		for(final String lang : langs)
-			if(!language.language.contains(lang))
-				return language.language + " - ERROR (" + language.display + ")";
-
-		return language.display + ":" + language.language;
 	}
 
 	@Override

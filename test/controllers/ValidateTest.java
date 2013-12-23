@@ -43,8 +43,9 @@ public class ValidateTest extends AbstractTest
 	@Test
 	public void testUnmappedLanguages()
 	{
-		final Result result = route(fakeRequest("GET", "/validate/unmapped_languages"));
-		assertThat(status(result)).isEqualTo(OK);
+		Validate.findUnmapped(false, 5);
+//		final Result result = route(fakeRequest("GET", "/validate/unmapped_languages"));
+//		assertThat(status(result)).isEqualTo(OK);
 	}
 
 	@Test

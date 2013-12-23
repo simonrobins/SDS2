@@ -28,7 +28,7 @@ public class ReleasesTest extends AbstractTest
 		insert("counter", "item, last_one", "'coda_shipping_order.order_id', 0");
 		insert("counter", "item, last_one", "'coda_shipping_order_product.product_order_id', 0");
 
-		Result result = get("/releases/Coda%20Financials/12.000/DestinationControl_DVD1_12.000.670.iso");
+		Result result = get("/releases/Coda_Financials/12.000/DestinationControl_DVD1_12.000.670.iso");
 		assertThat(status(result)).isEqualTo(SEE_OTHER);
 	}
 

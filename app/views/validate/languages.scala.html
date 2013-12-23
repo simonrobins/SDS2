@@ -5,13 +5,13 @@
   <h2>Languages Product and Version List</h2>
   @for(level1 <- languages.getChildren()) {
   <ul>
-  	<li>@level1.name</li>
+  	<li>@level1.language</li>
     @for(level2 <- level1.getChildren()) {
     <ul>
-      <li>@level2.name</li>
+      <li>@level2.language</li>
       @for(level3 <- level2.getChildren()) {
       <ul>
-        <li>@level3.name</li>
+        <li>@level3.language</li>
         @for(level4 <- level3.getChildren()) {
         <ul>
             <li>@(level4.getDisplayLanguage())</li>

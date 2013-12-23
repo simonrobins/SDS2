@@ -37,6 +37,8 @@ public class Validate extends Controller
 	private static Pattern	releasesPattern		= Pattern.compile("^(productlist\\.txt)|(info\\.txt)|(.+\\.md5)|(.+\\.gz)|(.+~)$");
 	private static Pattern	languagesPattern	= Pattern.compile("^(languagelist\\.txt)|(info\\.txt)|(.+\\.md5)|(.+\\.gz)|(.+~)$");
 
+	private static Pattern	SEPARATOR			= Pattern.compile("\\\\");
+
 	public static Result index()
 	{
 		return ok(views.html.validate.index.render());
@@ -168,6 +170,7 @@ public class Validate extends Controller
 		}));
 	}
 
+	@SuppressWarnings("null")
 	public static Result servicepacks()
 	{
 		final Promise<Map<File, List<String>>> promiseOfList = Akka.future(new Callable<Map<File, List<String>>>()
@@ -182,7 +185,7 @@ public class Validate extends Controller
 		return async(promiseOfList.map(new Function<Map<File, List<String>>, Result>()
 		{
 			@Override
-			public Result apply(final @Nullable Map<File, List<String>> servicepacks)
+			public Result apply(final Map<File, List<String>> servicepacks)
 			{
 				return ok(views.html.validate.servicepacks.render(servicepacks));
 			}
@@ -191,6 +194,7 @@ public class Validate extends Controller
 
 	private final static FileFilter	sps	= new FileFilter()
 										{
+											@SuppressWarnings("null")
 											@Override
 											public boolean accept(final File file)
 											{
@@ -363,7 +367,7 @@ public class Validate extends Controller
 		for (final File file : files)
 		{
 			final String path = file.getAbsolutePath().substring(root.getAbsolutePath().length());
-			String[] parts = path.split("\\\\");
+			String[] parts = SEPARATOR.split(path);
 
 			if (parts.length == length && parts[0].length() == 0)
 			{

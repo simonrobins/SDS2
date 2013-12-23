@@ -4,7 +4,6 @@ import java.io.File;
 
 import misc.Settings;
 import misc.Utilities;
-import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import security.Secured;
@@ -12,7 +11,7 @@ import data.AbstractNode;
 import data.DocumentMap;
 
 @Security.Authenticated(Secured.class)
-public class Documents extends Controller
+public class Documents extends BaseController
 {
 	public static Result index()
 	{
@@ -26,7 +25,7 @@ public class Documents extends Controller
 	public static Result download3(final String level1, final String level2, final String filename)
 	{
 		final File file = Utilities.fileFromPathComponents(Settings.DOCUMENTS_DIR, level1, level2, filename);
-		if(!file.exists())
+		if (!file.exists())
 			return notFound(filename);
 
 		final String url = routes.Documents.internal3(level1, level2, filename).url();
@@ -40,7 +39,7 @@ public class Documents extends Controller
 	public static Result download4(final String level1, final String level2, String level3, final String filename)
 	{
 		final File file = Utilities.fileFromPathComponents(Settings.DOCUMENTS_DIR, level1, level2, level3, filename);
-		if(!file.exists())
+		if (!file.exists())
 			return notFound(filename);
 
 		final String url = routes.Documents.internal4(level1, level2, level3, filename).url();

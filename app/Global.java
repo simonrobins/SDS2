@@ -5,7 +5,9 @@ import java.lang.reflect.Method;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
+import play.Logger;
 import play.Play;
+import play.api.UsefulException;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
 
@@ -13,32 +15,40 @@ import play.mvc.Result;
 public class Global extends play.GlobalSettings
 {
 	@Override
-	public @Nullable Result onError(@Nullable RequestHeader request, @Nullable Throwable t)
+	public @Nullable
+	Result onError(@Nullable RequestHeader request, @Nullable Throwable t)
 	{
-		if(Play.isDev())
+		if (Play.isDev())
 		{
 			return super.onError(request, t);
 		}
 		else
 		{
-			Object id = getId(t);
+			Object id;
+			if (t instanceof UsefulException)
+				id = ((UsefulException) t).id;
+			else
+				id = getId(t);
+
 			return internalServerError(views.html.error.render(id));
 		}
 	}
 
 	// I know the id is there, there just isn't another way to get to it.
-	private @Nullable Object getId(@Nullable Throwable t)
+	private @Nullable
+	Object getId(@Nullable Throwable t)
 	{
 		try
 		{
-			if(t == null)
+			if (t == null)
 				throw new NullPointerException("");
+
 			Method getId = t.getClass().getMethod("id");
 			return getId.invoke(t);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			System.err.println(e.getMessage());
+			Logger.error(e.getMessage());
 			return null;
 		}
 	}

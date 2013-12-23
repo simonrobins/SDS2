@@ -16,15 +16,20 @@ import play.mvc.Http.Request;
 
 public class Utilities
 {
+	public static boolean isNotEmpty(String string)
+	{
+		return (string != null) && (string.trim().length() > 0);
+	}
+
 	public static void quietClose(final @Nullable Closeable stream)
 	{
-		if(stream != null)
+		if (stream != null)
 		{
 			try
 			{
 				stream.close();
 			}
-			catch(final IOException ioe)
+			catch (final IOException ioe)
 			{
 				ioe.printStackTrace();
 			}
@@ -38,7 +43,7 @@ public class Utilities
 		final Map<String, String[]> headers = request.headers();
 		final String[] header = headers.get("User-Agent");
 
-		if(header == null || header.length < 1)
+		if (header == null || header.length < 1)
 			return version;
 
 		final String userAgent = header[0];
@@ -47,7 +52,7 @@ public class Utilities
 
 		final Pattern p = Pattern.compile("MSIE (\\d+\\.\\d+)b?;");
 		final Matcher m = p.matcher(userAgent);
-		while(m.find())
+		while (m.find())
 		{
 			version = Double.parseDouble(userAgent.substring(m.start(1), m.end(1)));
 		}
@@ -57,7 +62,7 @@ public class Utilities
 
 	public static File fileFromPathComponents(File root, final String... components)
 	{
-		for(final String component : components)
+		for (final String component : components)
 			root = new File(root, component);
 
 		return root;
@@ -82,7 +87,7 @@ public class Utilities
 			final BufferedReader br = new BufferedReader(new FileReader(info));
 			String line;
 
-			while((line = br.readLine()) != null)
+			while ((line = br.readLine()) != null)
 			{
 				infoText.append(line);
 				infoText.append("\n");
@@ -90,7 +95,7 @@ public class Utilities
 
 			br.close();
 		}
-		catch(final Exception e)
+		catch (final Exception e)
 		{
 		}
 		return infoText.length() > 0 ? infoText.toString() : "";

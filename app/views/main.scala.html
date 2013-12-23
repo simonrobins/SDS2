@@ -20,11 +20,11 @@
 			<div id="logo"></div>
 			<div id="logout">
 			@if(Http.Context.current.get() != null){
-				@if(helpers.SessionHelper.getAccountUsername(session)) {
+				@if(helpers.SessionHelper.getAccountUsername(session, misc.Settings.APPLICATION_SECRET)) {
 					Log out:
 					<a href="@routes.Application.logout">
-						@helpers.SessionHelper.getAccountUsername(session)
-						(@helpers.SessionHelper.getAccountName(session))
+						@helpers.SessionHelper.getAccountUsername(session, misc.Settings.APPLICATION_SECRET)
+						(@helpers.SessionHelper.getAccountName(session, misc.Settings.APPLICATION_SECRET))
 					</a>
 				}
 			}

@@ -11,7 +11,7 @@
 	<target name="copy">
 		<zip destfile="dist/sds2-1.0-SNAPSHOT.zip" update="true">
 			<zipfileset file="*.bat" prefix="sds2-1.0-SNAPSHOT" />
-			<zipfileset file="conf/*.conf" prefix="sds2-1.0-SNAPSHOT" />
+			<zipfileset file="conf/*.conf" prefix="sds2-1.0-SNAPSHOT/conf" />
 			<zipfileset file="db/unittest.h2.db" prefix="sds2-1.0-SNAPSHOT/db" />
 			<zipfileset dir="nginx" prefix="sds2-1.0-SNAPSHOT/nginx" />
 			<zipfileset dir="sds" prefix="sds2-1.0-SNAPSHOT/sds" />

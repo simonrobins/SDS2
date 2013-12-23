@@ -27,8 +27,8 @@ public class SupportArea extends Controller
 {
 	public static Result index()
 	{
-		final String accountId = SessionHelper.getAccountIdAsString(session());
-		if(accountId == null)
+		final String accountId = SessionHelper.getAccountIdAsString(session(), Settings.APPLICATION_SECRET);
+		if (accountId == null)
 			return internalServerError();
 
 		final DocumentNode documents = DocumentMap.getSupportMap(accountId);
@@ -40,12 +40,12 @@ public class SupportArea extends Controller
 
 	public static Result download1(final String filename)
 	{
-		final String accountId = SessionHelper.getAccountIdAsString(session());
-		if(accountId == null)
+		final String accountId = SessionHelper.getAccountIdAsString(session(), Settings.APPLICATION_SECRET);
+		if (accountId == null)
 			return notFound(filename);
 
 		final File file = Utilities.fileFromPathComponents(Settings.SUPPORT_DIR, accountId, filename);
-		if(!file.exists())
+		if (!file.exists())
 			return notFound(filename);
 
 		final String url = routes.SupportArea.internal1(accountId, filename).url();
@@ -58,12 +58,12 @@ public class SupportArea extends Controller
 
 	public static Result download2(final String level1, final String filename)
 	{
-		final String accountId = SessionHelper.getAccountIdAsString(session());
-		if(accountId == null)
+		final String accountId = SessionHelper.getAccountIdAsString(session(), Settings.APPLICATION_SECRET);
+		if (accountId == null)
 			return internalServerError();
 
 		final File file = Utilities.fileFromPathComponents(Settings.SUPPORT_DIR, accountId, level1, filename);
-		if(!file.exists())
+		if (!file.exists())
 			return notFound(filename);
 
 		final String url = routes.SupportArea.internal2(accountId, level1, filename).url();
@@ -91,13 +91,13 @@ public class SupportArea extends Controller
 		final RequestBody body = request().body();
 		final MultipartFormData formData = body.asMultipartFormData();
 		final FilePart filepart = formData.getFile("file");
-		if(filepart != null)
+		if (filepart != null)
 		{
 			final String filename = filepart.getFilename();
 			final File srcFile = filepart.getFile();
 
-			final String accountId = SessionHelper.getAccountIdAsString(session());
-			if(accountId == null)
+			final String accountId = SessionHelper.getAccountIdAsString(session(), Settings.APPLICATION_SECRET);
+			if (accountId == null)
 				return internalServerError();
 
 			File support = new File(Settings.SUPPORT_DIR, accountId);
@@ -111,18 +111,18 @@ public class SupportArea extends Controller
 			FileChannel dest = null;
 			try
 			{
-				if(!destFile.exists())
+				if (!destFile.exists())
 					destFile.createNewFile();
 
 				src = new FileInputStream(srcFile).getChannel();
-				if(src == null)
+				if (src == null)
 					throw new NullPointerException("File not found: " + srcFile);
 				dest = new FileOutputStream(destFile).getChannel();
-				if(dest == null)
+				if (dest == null)
 					throw new NullPointerException("File not found: " + destFile);
 				dest.transferFrom(src, 0, src.size());
 			}
-			catch(final Exception e)
+			catch (final Exception e)
 			{
 				e.printStackTrace();
 			}

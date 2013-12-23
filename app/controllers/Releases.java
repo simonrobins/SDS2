@@ -11,7 +11,7 @@ import misc.Settings;
 import misc.Utilities;
 import models.CodaSdsValidate;
 import models.CompanyDownload;
-import play.mvc.Controller;
+import play.Logger;
 import play.mvc.Result;
 import play.mvc.Security;
 import security.Secured;
@@ -21,11 +21,11 @@ import data.ProductNode;
 import data.ProductVersion;
 
 @Security.Authenticated(Secured.class)
-public class Releases extends Controller
+public class Releases extends BaseController
 {
 	public static Result index()
 	{
-		final int accountId = SessionHelper.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session(), Settings.APPLICATION_SECRET);
 		final Set<ProductVersion> allowed = CodaSdsValidate.getProductVersionMap2(accountId);
 
 		final ProductNode products = ProductMap.getProductMap();
@@ -38,30 +38,30 @@ public class Releases extends Controller
 
 	public static Result download(final String level1, final String level2, final String filename)
 	{
-		if(!SessionHelper.hasDownloadAccess(session()))
+		if (!SessionHelper.hasDownloadAccess(session()))
 			return index();
 
 		final File file = Utilities.fileFromPathComponents(Settings.RELEASES_DIR, level1, level2, filename);
-		if(!file.exists())
+		if (!file.exists())
 			return notFound(file);
 
-		final int accountId = SessionHelper.getAccountId(session());
+		final int accountId = SessionHelper.getAccountId(session(), Settings.APPLICATION_SECRET);
 		final Set<ProductVersion> allowedProducts2 = CodaSdsValidate.getProductVersionMap2(accountId, true);
 
 		final AbstractNode releases = ProductMap.getProductMap();
 		final ProductNode node = releases.get(level1, level2, filename);
-		if(node == null)
+		if (node == null)
 			return notFound(file);
 
 		final Set<ProductVersion> products = node.getProducts();
 		products.retainAll(allowedProducts2);
 
-		if(products.isEmpty())
+		if (products.isEmpty())
 			return notFound(file);
 
 		String ref = "";
-		if(SessionHelper.hasUpdateAccess(session()))
-			ref = Helpers.updateShippingOrderReleases(SessionHelper.getAccountContactId(session()), products, file);
+		if (SessionHelper.hasUpdateAccess(session()))
+			ref = Helpers.updateShippingOrderReleases(SessionHelper.getAccountContactId(session(), Settings.APPLICATION_SECRET), products, file);
 
 		return redirect(routes.Releases.redirect(level1, level2, filename, ref).url());
 	}
@@ -70,10 +70,13 @@ public class Releases extends Controller
 	{
 		final Set<CompanyDownload> cds = CompanyDownloadFinder.findReference(ref);
 
-		if(cds.size() == 0)
+		if (cds.size() == 0)
 			return redirect(routes.Releases.index());
 
+//		final String url = "/releases/internal/" + level1 + "/" + level2 + "/" + filename;
 		final String url = routes.Releases.internal(level1, level2, filename).url();
+
+		Logger.debug("Redirect to " + url + "(" + url + ")");
 
 		response().setHeader("X-Accel-Redirect", url);
 		response().setHeader("Content-Disposition", "attachment; filename=" + filename);

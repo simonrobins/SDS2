@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Set;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 public class DocumentNode extends AbstractNode
 {
 	DocumentNode(final File file)
@@ -19,12 +17,12 @@ public class DocumentNode extends AbstractNode
 	}
 
 	@Override
-	public void intersect(final @NonNull Collection<ProductVersion> allowed)
+	public void intersect(final Collection<ProductVersion> allowed)
 	{
 	}
 
 	@Override
-	public boolean isNotAllowed(final @NonNull Set<Integer> allowed)
+	public boolean isNotAllowed(final Set<Integer> allowed)
 	{
 		return false;
 	}

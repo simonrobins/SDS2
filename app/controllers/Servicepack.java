@@ -31,7 +31,6 @@ import play.libs.Akka;
 import play.libs.F;
 import play.libs.F.Function;
 import play.libs.F.Tuple;
-import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import security.Secured;
@@ -39,12 +38,12 @@ import tags.Lists;
 import data.ProductVersion;
 
 @Security.Authenticated(Secured.class)
-public class Servicepack extends Controller
+public class Servicepack extends BaseController
 {
 	public static Result index()
 	{
-		final int accountId = SessionHelper.getAccountId(session());
-		if(Logger.isDebugEnabled())
+		final int accountId = SessionHelper.getAccountId(session(), Settings.APPLICATION_SECRET);
+		if (Logger.isDebugEnabled())
 			Logger.of("servicepack").debug("account_id = " + accountId);
 
 		final Map<Integer, Set<Integer>> allowedProducts = CodaSdsValidate.getProductVersionMap(accountId);
@@ -56,7 +55,7 @@ public class Servicepack extends Controller
 		allowedProducts.remove(Constants.ProductId.CCM);
 
 		final Set<Integer> versions = new LinkedHashSet<Integer>();
-		for(final Integer key : allowedProducts.keySet())
+		for (final Integer key : allowedProducts.keySet())
 			versions.addAll(allowedProducts.get(key));
 
 		final boolean fin112 = versions.contains(Constants.ProductId.FINANCE_112); // 11.2
@@ -70,39 +69,39 @@ public class Servicepack extends Controller
 	{
 		final Integer versionId = Versions.get(version);
 
-		final int accountId = SessionHelper.getAccountId(session());
-		if(Logger.isDebugEnabled())
+		final int accountId = SessionHelper.getAccountId(session(), Settings.APPLICATION_SECRET);
+		if (Logger.isDebugEnabled())
 			Logger.of("servicepack").debug("account_id = " + accountId);
 
 		final Set<Integer> allowedProducts = CodaSdsValidate.getProductVersionMap(accountId, versionId).keySet();
-		if(allowedProducts == null)
+		if (allowedProducts == null)
 			return internalServerError("Allowed Products is empty");
 
 		final Set<Integer> spProducts = ServicePackProductFinder.getServicePackProducts();
 		spProducts.remove(Constants.ProductId.CCM);
 		allowedProducts.retainAll(spProducts);
 
-		if(allowedProducts.size() == 0)
+		if (allowedProducts.size() == 0)
 			return badRequest();
 
 		final List<Integer> servicepacks = Lists.getVersions(version);
 
-		if(Logger.isDebugEnabled())
+		if (Logger.isDebugEnabled())
 			Logger.of("servicepack").debug("servicepacks=" + servicepacks);
 
-		final AccountAddon addon = Helpers.getAccountAddon(SessionHelper.getAccountId(session()), version);
+		final AccountAddon addon = Helpers.getAccountAddon(SessionHelper.getAccountId(session(), Settings.APPLICATION_SECRET), version);
 
 		return ok(views.html.servicepack.finance.render(getInfo(), version, servicepacks, allowedProducts, addon));
 	}
 
 	public static Result download()
 	{
-		if(!SessionHelper.hasDownloadAccess(session()))
+		if (!SessionHelper.hasDownloadAccess(session()))
 			return index();
 
 		final Form<Download> filledForm = new Form<Download>(Download.class).bindFromRequest();
 
-		if(filledForm.hasErrors())
+		if (filledForm.hasErrors())
 			return badRequest();
 
 		final Download df = filledForm.get();
@@ -113,7 +112,7 @@ public class Servicepack extends Controller
 		final String path = version + "-SP" + df.getServicepack();
 		final String pdfName = "CODA V" + path + ".pdf";
 
-		if(filledForm.data().containsKey("doc"))
+		if (filledForm.data().containsKey("doc"))
 		{
 			final String url = routes.Servicepack.doc(path, pdfName).url();
 
@@ -125,37 +124,37 @@ public class Servicepack extends Controller
 
 		final File root = new File(Settings.SERVICEPACKS_FINANCE_DIR, version + "-SP" + df.getServicepack());
 		final File[] jars = root.listFiles(new FilenameFilter()
+		{
+			@Override
+			public boolean accept(final @Nullable File arg0, final @Nullable String arg1)
 			{
-				@Override
-				public boolean accept(final @Nullable File arg0, final @Nullable String arg1)
-				{
-					if(arg1 == null)
-						return false;
-					else
-						return arg1.endsWith(".jar");
-				}
-			});
+				if (arg1 == null)
+					return false;
+				else
+					return arg1.endsWith(".jar");
+			}
+		});
 
-		if(jars == null || jars.length == 0)
+		if (jars == null || jars.length == 0)
 			return internalServerError("No jar files found (" + root + ")");
 
 		final File[] zips = root.listFiles(new FilenameFilter()
+		{
+			@Override
+			public boolean accept(final @Nullable File arg0, final @Nullable String arg1)
 			{
-				@Override
-				public boolean accept(final @Nullable File arg0, final @Nullable String arg1)
-				{
-					return (arg1 == null) ? false : arg1.endsWith(".zip");
-				}
-			});
+				return (arg1 == null) ? false : arg1.endsWith(".zip");
+			}
+		});
 
 		final List<File> productList = new ArrayList<File>();
 		final Set<ProductVersion> products = new LinkedHashSet<ProductVersion>();
 
 		final File doc = new File(new File(Settings.SERVICEPACKS_FINANCE_DIR, path), pdfName);
-		if(doc.exists())
+		if (doc.exists())
 			productList.add(doc);
 
-		for(final File zip : zips)
+		for (final File zip : zips)
 			productList.add(zip);
 
 		final String name = jars[0].getName();
@@ -166,32 +165,32 @@ public class Servicepack extends Controller
 
 		long identifier = 0;
 
-		if(!redhat && java)
+		if (!redhat && java)
 		{
 			identifier |= Products.FRAMEWORK_APP;
 			final File product = makeProductFile(root, "framework-app", build);
 
-			if(product.exists() == false)
+			if (product.exists() == false)
 				return internalServerError(product.getName());
 
 			productList.add(product);
 		}
 
-		if(java)
+		if (java)
 		{
 			identifier |= Products.FRAMEWORK_WEB;
 			final File product = makeProductFile(root, "framework-web", build);
 
-			if(product.exists() == false)
+			if (product.exists() == false)
 				return internalServerError(product.getName());
 
 			productList.add(product);
 			products.add(new ProductVersion(20, versionId));
 		}
 
-		if(df.isAssets())
+		if (df.isAssets())
 		{
-			if(!redhat)
+			if (!redhat)
 			{
 				identifier |= Products.ASSETS_APP;
 				productList.add(new File(root, "assets-app-" + build + ".jar"));
@@ -200,9 +199,9 @@ public class Servicepack extends Controller
 			productList.add(new File(root, "assets-web-" + build + ".jar"));
 			products.add(new ProductVersion(2, versionId));
 		}
-		if(df.isBilling())
+		if (df.isBilling())
 		{
-			if(!redhat)
+			if (!redhat)
 			{
 				identifier |= Products.BILLING_APP;
 				productList.add(new File(root, "billing-app-" + build + ".jar"));
@@ -214,21 +213,21 @@ public class Servicepack extends Controller
 			productList.add(new File(root, "billingmasters-web-" + build + ".jar"));
 			products.add(new ProductVersion(123, versionId));
 		}
-		if(!redhat && df.isCustomiser())
+		if (!redhat && df.isCustomiser())
 		{
 			identifier |= Products.CUSTOMISER;
 			productList.add(new File(root, "customiser-app-" + build + ".jar"));
 			products.add(new ProductVersion(11, versionId));
 		}
-		if(df.isFinance())
+		if (df.isFinance())
 		{
 			identifier |= Products.FINANCE_WEB;
 			productList.add(new File(root, "finance-web-" + build + ".jar"));
 			products.add(new ProductVersion(12, versionId));
 		}
-		if(df.isPim())
+		if (df.isPim())
 		{
-			if(!redhat)
+			if (!redhat)
 			{
 				identifier |= Products.PIM_APP;
 				productList.add(new File(root, "invoicematching-app-" + build + ".jar"));
@@ -238,9 +237,9 @@ public class Servicepack extends Controller
 			productList.add(new File(root, "invoicematching-web-" + build + ".jar"));
 			products.add(new ProductVersion(22, versionId));
 		}
-		if(df.isPop())
+		if (df.isPop())
 		{
-			if(!redhat)
+			if (!redhat)
 			{
 				identifier |= Products.POP_APP;
 				productList.add(new File(root, "purchasing-app-" + build + ".jar"));
@@ -250,12 +249,12 @@ public class Servicepack extends Controller
 			productList.add(new File(root, "purchasing-web-" + build + ".jar"));
 			products.add(new ProductVersion(127, versionId));
 		}
-		if(!redhat && df.isFin())
+		if (!redhat && df.isFin())
 		{
 			identifier |= Products.FINANCIALS;
 			final File finance = makeFinanceAppName(root.getName(), build, df);
 
-			if(finance.exists() == false)
+			if (finance.exists() == false)
 			{
 				Logger.error("Invalid platform, Database, Encoding combination: " + finance);
 				flash("select.value", "Invalid platform, Database, Encoding combination.");
@@ -266,13 +265,13 @@ public class Servicepack extends Controller
 			products.add(new ProductVersion(19, versionId));
 
 			String encoding = df.getEncoding();
-			if("CP285".equals(df.getEncoding()) || "CP37".equals(df.getEncoding()))
+			if ("CP285".equals(df.getEncoding()) || "CP37".equals(df.getEncoding()))
 				encoding = "ASC";
 
 			identifier |= Products.CORE_CLIENT;
 			final File cc = makeCoreClientName(root.getName(), build, encoding);
 
-			if(cc.exists() == false)
+			if (cc.exists() == false)
 			{
 				Logger.error("Invalid encoding: " + cc);
 				flash("select.value", "Invalid encoding.");
@@ -282,7 +281,7 @@ public class Servicepack extends Controller
 			productList.add(cc);
 		}
 
-		if(productList.size() == 0)
+		if (productList.size() == 0)
 		{
 			flash("select.value", "Please select at least one product");
 			return finance(version);
@@ -294,10 +293,10 @@ public class Servicepack extends Controller
 
 		final String size = calculateArchiveSize(productList);
 
-		final int accountContactId = SessionHelper.getAccountContactId(session());
+		final int accountContactId = SessionHelper.getAccountContactId(session(), Settings.APPLICATION_SECRET);
 
 		String ref = "";
-		if(SessionHelper.hasUpdateAccess(session()))
+		if (SessionHelper.hasUpdateAccess(session()))
 			ref = Helpers.updateShippingOrderServicePacks(accountContactId, products, df, archive);
 
 		return redirect(routes.Servicepack.stream(archive, ref, size));
@@ -305,11 +304,11 @@ public class Servicepack extends Controller
 
 	public static Result stream(final String archive, final String ref, final String totalSize)
 	{
-		if(Complete.testRef(ref) == false)
+		if (Complete.testRef(ref) == false)
 			return redirect(routes.Servicepack.index());
 
 		final File file = new File(Settings.DOWNLOAD_DIR, archive);
-		if(file.exists())
+		if (file.exists())
 		{
 			final String url = routes.Servicepack.streaming(archive, ref).url();
 
@@ -329,11 +328,11 @@ public class Servicepack extends Controller
 
 	public static Result streaming(final String archive, final String ref)
 	{
-		if(Complete.testRef(ref) == false)
+		if (Complete.testRef(ref) == false)
 			return redirect(routes.Servicepack.index());
 
 		final File file = new File(Settings.DOWNLOAD_DIR, archive);
-		if(file.exists())
+		if (file.exists())
 		{
 			final String url = routes.Servicepack.internal(archive).url();
 
@@ -361,39 +360,39 @@ public class Servicepack extends Controller
 	private static void createArchive(final String archive, final List<File> files)
 	{
 		final F.Promise<Tuple<String, List<File>>> promiseOfFile = Akka.future(new Callable<Tuple<String, List<File>>>()
+		{
+			@Override
+			public Tuple<String, List<File>> call()
 			{
-				@Override
-				public Tuple<String, List<File>> call()
-				{
-					return new Tuple<String, List<File>>(archive, files);
-				}
-			});
+				return new Tuple<String, List<File>>(archive, files);
+			}
+		});
 
 		async(promiseOfFile.map(new Function<Tuple<String, List<File>>, Result>()
+		{
+			@Override
+			public Result apply(final @Nullable Tuple<String, List<File>> tuple)
 			{
-				@Override
-				public Result apply(final @Nullable Tuple<String, List<File>> tuple)
+				long maxRetain = Settings.ARCHIVE_MAX_RETAIN_PERIOD;
+				long minRetain = Settings.ARCHIVE_MIN_RETAIN_PERIOD;
+				long minFreeSpace = Settings.ARCHIVE_MIN_FREE_SPACE;
+
+				if (tuple != null)
 				{
-					long maxRetain = Settings.ARCHIVE_MAX_RETAIN_PERIOD;
-					long minRetain = Settings.ARCHIVE_MIN_RETAIN_PERIOD;
-					long minFreeSpace = Settings.ARCHIVE_MIN_FREE_SPACE;
-
-					if(tuple != null)
-					{
-						final ArchiveGenerator ag = new ArchiveGenerator(tuple._1, tuple._2, maxRetain, minRetain, minFreeSpace);
-						ag.run();
-					}
-
-					return ok();
+					final ArchiveGenerator ag = new ArchiveGenerator(tuple._1, tuple._2, maxRetain, minRetain, minFreeSpace);
+					ag.run();
 				}
-			}));
+
+				return ok();
+			}
+		}));
 	}
 
 	private static String calculateArchiveSize(final List<File> files)
 	{
 		long size = 0;
 
-		for(final File file : files)
+		for (final File file : files)
 			size += file.length();
 
 		return new Long(size).toString();
@@ -419,14 +418,14 @@ public class Servicepack extends Controller
 
 		String filename = platform + "-" + database + "-" + encoding + "-" + build;
 
-		if("WIN".equals(platform))
+		if ("WIN".equals(platform))
 			filename += ".exe";
-		else if("IBM".equals(platform))
+		else if ("IBM".equals(platform))
 		{
 			filename = "V" + root.substring(0, 2) + root.substring(3, 4) + "OASSP";
-			if("CP37".equals(form.getEncoding()))
+			if ("CP37".equals(form.getEncoding()))
 				filename = filename + "7";
-			else if("UNI".equals(form.getEncoding()))
+			else if ("UNI".equals(form.getEncoding()))
 				filename = filename + "U";
 		}
 		else

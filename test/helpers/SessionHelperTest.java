@@ -2,10 +2,16 @@ package helpers;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import misc.Settings;
+import models.Account;
+import models.AccountContact;
+
+import org.fest.assertions.Assertions;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,6 +22,7 @@ import controllers.AbstractTest;
 public class SessionHelperTest extends AbstractTest
 {
 	private static Http.Session	session;
+	private AccountContact		contact;
 
 	@BeforeClass
 	public static void startApp2()
@@ -28,13 +35,21 @@ public class SessionHelperTest extends AbstractTest
 	public void setUp()
 	{
 		session.clear();
+
+		Account account = new Account();
+		account.setId(999999);
+		account.setName("Testing, testing");
+
+		contact = new AccountContact();
+		contact.setId(1234);
+		contact.setEmail("email@example.com");
+		contact.setAccount(account);
 	}
 
 	@Test
-	public void testExceptionOnNullAccess()
+	public void testConstructor()
 	{
-		setAccess(null);
-		assertTrue(SessionHelper.hasReadOnlyAccess(session));
+		Assertions.assertThat(new SessionHelper()).isNotNull();
 	}
 
 	@Test
@@ -80,6 +95,77 @@ public class SessionHelperTest extends AbstractTest
 
 		setAccess("3");
 		assertTrue(SessionHelper.hasDownloadAccess(session));
+	}
+
+	@Test
+	public void testGetAccountIdAsString()
+	{
+		SessionHelper.setContact(session, contact, Settings.APPLICATION_SECRET);
+		Assertions.assertThat(SessionHelper.getAccountIdAsString(session, "")).isNull();
+		SessionHelper.setContact(session, contact, Settings.APPLICATION_SECRET);
+		Assertions.assertThat(SessionHelper.getAccountIdAsString(session, Settings.APPLICATION_SECRET)).isEqualTo("999999");
+	}
+
+	@Test
+	public void testGetAccountIdAsStringWithEmptySession()
+	{
+		Assertions.assertThat(SessionHelper.getAccountIdAsString(session, "")).isNull();
+		Assertions.assertThat(SessionHelper.getAccountIdAsString(session, Settings.APPLICATION_SECRET)).isNull();
+	}
+
+	@Test
+	public void getAccountId()
+	{
+		SessionHelper.setContact(session, contact, Settings.APPLICATION_SECRET);
+		Assertions.assertThat(SessionHelper.getAccountId(session, Settings.APPLICATION_SECRET)).isEqualTo(999999);
+	}
+
+	@Test(expected = NumberFormatException.class)
+	public void getAccountIdWithInvalidIs()
+	{
+		SessionHelper.setContact(session, contact, Settings.APPLICATION_SECRET);
+		Assertions.assertThat(SessionHelper.getAccountId(session, "")).isNull();
+	}
+
+	@Test
+	public void testGetAccountContactId()
+	{
+		SessionHelper.setContact(session, contact, Settings.APPLICATION_SECRET);
+		Assertions.assertThat(SessionHelper.getAccountContactId(session, Settings.APPLICATION_SECRET)).isEqualTo(1234);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void testGetAccountContactIdWithInvalidSecret()
+	{
+		SessionHelper.setContact(session, contact, Settings.APPLICATION_SECRET);
+		Assertions.assertThat(SessionHelper.getAccountContactId(session, "")).isNull();
+		fail("Expected RuntimeException");
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void testGetAccountContactIdWithEmptySessionAndInvalidId()
+	{
+		Assertions.assertThat(SessionHelper.getAccountContactId(session, "")).isNull();
+		fail("Expected RuntimeException");
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void testGetAccountContactIdWithEmptySession()
+	{
+		Assertions.assertThat(SessionHelper.getAccountContactId(session, Settings.APPLICATION_SECRET)).isNull();
+		fail("Expected RuntimeException");
+	}
+
+	@Test
+	public void getAccountName()
+	{
+
+	}
+
+	@Test
+	public void getAccountUsername()
+	{
+
 	}
 
 	private void setAccess(String access)

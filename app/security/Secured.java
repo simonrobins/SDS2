@@ -1,6 +1,7 @@
 package security;
 
 import helpers.SessionHelper;
+import misc.Settings;
 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -11,18 +12,20 @@ import play.mvc.Security;
 public class Secured extends Security.Authenticator
 {
 	@Override
-	public @Nullable String getUsername(final @Nullable Context ctx)
+	public @Nullable
+	String getUsername(final @Nullable Context ctx)
 	{
-		if(ctx != null)
-			return SessionHelper.getAccountIdAsString(ctx.session());
+		if (ctx != null)
+			return SessionHelper.getAccountIdAsString(ctx.session(), Settings.APPLICATION_SECRET);
 		else
 			return null;
 	}
 
 	@Override
-	public @Nullable Result onUnauthorized(final @Nullable Context ctx)
+	public @Nullable
+	Result onUnauthorized(final @Nullable Context ctx)
 	{
-		if(ctx != null)
+		if (ctx != null)
 			ctx.session().clear();
 		return unauthorized(views.html.unauthorised.render());
 	}
