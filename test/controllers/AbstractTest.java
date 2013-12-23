@@ -209,6 +209,21 @@ public class AbstractTest
 		deleteAll(Databases.SHIPPING_ORDER_PRODUCT);
 	}
 
+	protected void assertCount(String table, Long count)
+	{
+		assertCount(table, "1=1", count);
+	}
+
+	protected void assertCount(String table, String sql)
+	{
+		assertCount(table, sql, 1L);
+	}
+
+	protected void assertCount(String table, String sql, Long count)
+	{
+		Assertions.assertThat(count(table, sql)).isEqualTo(count);
+	}
+
 	private void deleteAll(String table)
 	{
 		try

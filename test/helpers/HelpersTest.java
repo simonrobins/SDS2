@@ -181,14 +181,4 @@ public class HelpersTest extends AbstractTest
 		Assertions.assertThat(addon.encoding).isEqualTo("encoding");
 		Assertions.assertThat(addon.serverOs).isEqualTo("server");
 	}
-
-	private void assertCount(String table, String sql)
-	{
-		assertCount(table, sql, 1L);
-	}
-
-	private void assertCount(String table, String sql, Long count)
-	{
-		Assertions.assertThat(count(table, sql)).isEqualTo(count);
-	}
 }
