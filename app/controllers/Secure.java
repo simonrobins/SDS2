@@ -17,7 +17,7 @@ public class Secure extends BaseController
 
 	public static Result restrictedAccess(final String id, final String expires, final String access, final String md5)
 	{
-		final boolean valid = AutoLogin.getInstance().validateMd5(Settings.SECURE_PASSWORD, id, expires, access, md5);
+		final boolean valid = AutoLogin.validateMd5(Settings.SECURE_PASSWORD, id, expires, access, md5);
 
 		if (valid)
 		{
