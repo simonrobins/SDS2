@@ -43,7 +43,7 @@ public class Releases extends BaseController
 
 		final File file = Utilities.fileFromPathComponents(Settings.RELEASES_DIR, level1, level2, filename);
 		if (!file.exists())
-			return notFound(file);
+			return notFound(file.getName());
 
 		final int accountId = SessionHelper.getAccountId(session(), Settings.APPLICATION_SECRET);
 		final Set<ProductVersion> allowedProducts2 = CodaSdsValidate.getProductVersionMap2(accountId, true);
@@ -51,19 +51,21 @@ public class Releases extends BaseController
 		final AbstractNode releases = ProductMap.getProductMap();
 		final ProductNode node = releases.get(level1, level2, filename);
 		if (node == null)
-			return notFound(file);
+			return notFound(file.getName());
 
 		final Set<ProductVersion> products = node.getProducts();
 		products.retainAll(allowedProducts2);
 
 		if (products.isEmpty())
-			return notFound(file);
+			return noContent();
 
-		String ref = "";
 		if (SessionHelper.hasUpdateAccess(session()))
-			ref = Helpers.updateShippingOrderReleases(SessionHelper.getAccountContactId(session(), Settings.APPLICATION_SECRET), products, file);
-
-		return redirect(routes.Releases.redirect(level1, level2, filename, ref).url());
+		{
+			String ref = Helpers.updateShippingOrderReleases(SessionHelper.getAccountContactId(session(), Settings.APPLICATION_SECRET), products, file);
+			return redirect(routes.Releases.redirect(level1, level2, filename, ref).url());
+		}
+		else
+			return index();
 	}
 
 	public static Result redirect(final String level1, final String level2, final String filename, final String ref)
@@ -73,7 +75,6 @@ public class Releases extends BaseController
 		if (cds.size() == 0)
 			return redirect(routes.Releases.index());
 
-//		final String url = "/releases/internal/" + level1 + "/" + level2 + "/" + filename;
 		final String url = routes.Releases.internal(level1, level2, filename).url();
 
 		Logger.debug("Redirect to " + url + "(" + url + ")");

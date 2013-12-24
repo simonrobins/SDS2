@@ -77,8 +77,8 @@ public class AbstractTest
 	@After
 	public void after()
 	{
-		Assertions.assertThat(count("account")).isEqualTo(1L);
-		Assertions.assertThat(count("account_contact")).isEqualTo(1L);
+		Assertions.assertThat(count("account")).isEqualTo(2L);
+		Assertions.assertThat(count("account_contact")).isEqualTo(2L);
 		Assertions.assertThat(count("coda_build")).isEqualTo(896L);
 		Assertions.assertThat(count("coda_product")).isEqualTo(196L);
 		Assertions.assertThat(count("coda_sds_validate")).isEqualTo(20162L);
@@ -245,5 +245,12 @@ public class AbstractTest
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected String setAccess(String id, String expires, String access)
+	{
+		String md5 = AutoLogin.generateMd5(Settings.SECURE_PASSWORD, id, expires, access);
+		Result result = callAction(controllers.routes.ref.Secure.restrictedAccess(id, expires, access, md5));
+		return header(HeaderNames.SET_COOKIE, result);
 	}
 }
