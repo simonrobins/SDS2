@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import misc.Settings;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -28,6 +30,7 @@ import play.mvc.Http.HeaderNames;
 import play.mvc.Result;
 import play.test.FakeApplication;
 import play.test.FakeRequest;
+import security.AutoLogin;
 
 public class AbstractTest
 {
@@ -50,7 +53,9 @@ public class AbstractTest
 
 		run = new QueryRunner(DB.getDataSource());
 
-		final Result result = callAction(controllers.routes.ref.Secure.restrictedAccess("41724", "1678382192", "3", "3f5f5c105462d19791978cb9a4bd6782"));
+		String md5 = AutoLogin.generateMd5(Settings.SECURE_PASSWORD, "41724", "1678382192", "3");
+		final Result result = callAction(controllers.routes.ref.Secure.restrictedAccess("41724", "1678382192", "3", md5));
+
 		cookies = header(HeaderNames.SET_COOKIE, result);
 	}
 
@@ -84,6 +89,11 @@ public class AbstractTest
 	}
 
 	protected Result get(final String url)
+	{
+		return route(fakeRequest("GET", url).withHeader(HeaderNames.COOKIE, cookies).withHeader("USER-AGENT", "MSIE 9.0;"));
+	}
+
+	protected Result getWithCookies(final String url, final String cookies)
 	{
 		return route(fakeRequest("GET", url).withHeader(HeaderNames.COOKIE, cookies).withHeader("USER-AGENT", "MSIE 9.0;"));
 	}
